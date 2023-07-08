@@ -1,23 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import {React, useEffect, useState } from "react";
+import Weather from "./components/Weather";
+import { Box } from "@mui/material";
 
 function App() {
+  const backgroundUrl = `https://images.pexels.com/photos/2387418/pexels-photo-2387418.jpeg?auto=compress&cs=tinysrgb&w=1000&h=550&dpr=2`;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundImage: `url(${backgroundUrl})`,
+      backgroundRepeat: 'no-repeat',
+      minHeight: '100vh',
+    }}>
+      <Weather />
     </div>
   );
 }
