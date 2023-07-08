@@ -8,7 +8,6 @@ import {
 import { colorThemes, fonts } from "../theme";
 import FlexBetween from "./flexBetween";
 import SearchIcon from '@mui/icons-material/Search';
-import { apiPrivate } from "../private";
 
 const Weather = () => {
     //styles from theme
@@ -19,7 +18,6 @@ const Weather = () => {
     const h2 = fonts.heading2;
     const h3 = fonts.heading3;
     const p = fonts.paragraph;
-    const apiKey = apiPrivate.key;
 
     //get current time
     const [time, setTime] = useState('');
@@ -44,7 +42,7 @@ const Weather = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${search}&appid=${apiKey}`);
+            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${search}&appid=8214c861b673b37ac8b739c9e228fb0b`);
             const data = await response.json();
             console.log(data)
         }
