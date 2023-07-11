@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { 
     Box, 
     Button, 
@@ -11,26 +10,16 @@ import {
 } from "@mui/material";
 import { colorThemes, fonts } from "../theme";
 import FlexBetween from "./flexBetween";
-import SearchIcon from '@mui/icons-material/Search';
 
 const Weather = () => {
-    //styles from theme
-    const transparent = colorThemes.simple.transparent;
-    const isMobile = useMediaQuery('(max-width: 500px)');
-    const h1 = fonts.heading1;
-    const h2 = fonts.heading2;
-    const h3 = fonts.heading3;
-    const p = fonts.paragraph;
-    
-
-    const [data, setData] = useState([]);
-    const [search, setSearch] = useState("Boston");
+    const [data, setData] = useState();
+    const [search, setSearch] = useState("New York");
 
     useEffect(() => {
         const fetchData = async () => {
             fetch(`https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(search)}&appid=8214c861b673b37ac8b739c9e228fb0b`)
             .then(response => {
-                if (!response.ok) throw new Error
+                if (!response.ok) throw new Error('Error')
                 return response.json();
             })
             .then(data => {
@@ -56,6 +45,14 @@ const Weather = () => {
     // const weatherIcon = data.weather.icon;
     // const windSpeed = data.wind.speed;
     // const speedDirection = data.wind.deg;
+
+    //styles from theme
+    const transparent = colorThemes.simple.transparent;
+    const isMobile = useMediaQuery('(max-width: 500px)');
+    const h1 = fonts.heading1;
+    const h2 = fonts.heading2;
+    const h3 = fonts.heading3;
+    const p = fonts.paragraph;
 
     return (
         <Box sx={{margin: '0', padding: '0'}}>
@@ -89,9 +86,7 @@ const Weather = () => {
                     <input 
                         placeholder="Search city" 
                         name="search"
-                        id="search_field"
-                        // value={search}
-                        // onKeyUp={(e) => setSearch(e.target.value)}
+                        value={search}
                         onChange={e => setSearch(e.target.value)}
                         style={{
                             width: !isMobile ? '65%' : '80%',
@@ -99,28 +94,13 @@ const Weather = () => {
                             fontSize: !isMobile ? '1.1rem' : '.8rem',
                         }}
                     />
-                    {/* <SearchIcon 
-                        sx={{ 
-                            marginLeft:'.5rem', 
-                            backgroundColor: colorThemes.simple.secondaryColor,
-                            padding: !isMobile ? '.45rem .8rem' : '.2rem .4rem',
-                            fontSize: '1.6rem',
-                            borderTopRightRadius: '.3rem',
-                            borderBottomRightRadius: '.3rem',
-                            color: textColor,
-                            '&:hover': {
-                                color: colorThemes.simple.accentColor,
-                                cursor: 'pointer',
-                            }
-                        }}
-                    /> */}
                 </Box>
                 <Box>
                     <FlexBetween>
                         <Card sx={{ minWidth: isMobile ? '98%' : '48%', my: '.25rem'}}>
                             <CardContent>
                                 <Typography variant='h2' sx={{ fontSize: 25, }} color="text.secondary" gutterBottom>
-                                    {data ? `${data.name}, ${data.sys.country}` : ''}
+                                    {data ? `${data.name}, ${data.sys.country}` : 'No data found'}
                                 </Typography>
                                 <Box>
                                     <Typography variant='h2' 
@@ -131,6 +111,10 @@ const Weather = () => {
                                         <span>&deg;F</span>
                                     </Typography>
                                 </Box>
+                                <Typography variant='h2' sx={{ fontSize: 17, mb: '1rem'}} color="text.secondary" gutterBottom>
+                                    {data ? `Feels like ${parseInt((data.main.feels_like - 273.15) * 9/5 + 32)}` : 'no data'}
+                                    <span>&deg;F</span>
+                                </Typography>
 
                                 <Box sx={{
                                     display: 'flex',
@@ -138,32 +122,25 @@ const Weather = () => {
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                 }}>
-                                    <Typography variant='h2' sx={{ fontSize: 20,}} color="text.secondary" gutterBottom>
-                                        {data ? `Low ${parseInt((data.main.temp_min - 273.15) * 9/5 + 32)}` : 'No data'} 
+                                    <Typography variant='h2' sx={{ fontSize: 18,}} color="text.secondary" gutterBottom>
+                                        {data ? `low ${parseInt((data.main.temp_min - 273.15) * 9/5 + 32)}` : 'No data'} 
                                         <span>&deg;F</span>
                                     </Typography>
-                                <Typography variant='h2' sx={{ fontSize: 20,}} color="text.secondary" gutterBottom>
-                                        {data ? `High ${parseInt((data.main.temp_max - 273.15) * 9/5 + 32)}` : 'No data'} 
+                                    <Typography variant='h2' sx={{ fontSize: 18,}} color="text.secondary" gutterBottom>
+                                        {data ? `high ${parseInt((data.main.temp_max - 273.15) * 9/5 + 32)}` : 'No data'} 
                                         <span>&deg;F</span>
                                     </Typography>
                                 </Box>
-
                             </CardContent>
-                            <CardActions>
-                                <Button size="small">Learn More</Button>
-                            </CardActions>
                             </Card>
 
                             <Card sx={{ minWidth: isMobile ? '98%' : '49%', my: '.25rem' }}>
                             <CardContent>
-                                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                                    Temperature
+                                <Typography variant={p} sx={{ fontSize: 14, textAlign: 'left',}} color="text.secondary" gutterBottom>
+                                    {data ? `Feels like ${data.main.feels_like}` : 'no data'}
                                 </Typography>
 
                             </CardContent>
-                            <CardActions>
-                                <Button size="small">Learn More</Button>
-                            </CardActions>
                         </Card>
                     </FlexBetween>
                 </Box>
