@@ -74,7 +74,7 @@ const Weather = () => {
                     variant="h1" 
                     sx={{fontSize: '2rem', color: 'white', textAlign: 'center', marginBottom: '1rem', color: colorThemes.simple.accentColor}}
                  >
-                HT weather
+                Daily Weather
             </Typography>   
                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', m: '1rem 0', gap: '1rem'}}>
                     {citySelect.map((city) => (
