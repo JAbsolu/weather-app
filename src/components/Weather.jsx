@@ -8,6 +8,7 @@ import {
     Typography,
     useMediaQuery,
 } from "@mui/material";
+import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import { colorThemes, fonts } from "../theme";
 import FlexBetween from "./flexBetween";
 
@@ -75,13 +76,13 @@ const Weather = () => {
                  >
                 HT Weather
             </Typography>   
-                <FlexBetween>
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', m: '1rem 0', gap: '1rem'}}>
                     {citySelect.map((city) => (
                         <Typography 
                             sx={{ 
                                 fontSize: isMobile ? '.8rem' : '1rem', 
                                 cursor: 'pointer', 
-                                mx: '.5rem',
+                                m: '0',
                                 '&:hover':{ 
                                     color: colorThemes.simple.accentColor 
                                 }
@@ -90,7 +91,7 @@ const Weather = () => {
                             {city} {/* Each indvidual element in the array */}
                         </Typography>
                     ))}
-                </FlexBetween>
+                </Box>
                 
                 <Box sx={{
                     display: 'flex',
@@ -104,7 +105,7 @@ const Weather = () => {
                         value={search}
                         onChange={e => setSearch(e.target.value)}
                         style={{
-                            width: !isMobile ? '65%' : '80%',
+                            width: !isMobile ? '65%' : '84%',
                             padding: !isMobile ? '.5rem' : '.4rem',
                             fontSize: !isMobile ? '1.1rem' : '.8rem',
                         }}
@@ -112,26 +113,30 @@ const Weather = () => {
                 </Box>
                 <Box>
                     <FlexBetween>
-                    <Card sx={{ minWidth: isMobile ? '98%' : '25%', my: '.25rem' }}>
+                        <Card sx={{ minWidth: isMobile ? '98%' : '25%', my: '.25rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            {/* SHOW DIFFERENT ICONS BASED ON DESCRIPTION */}
                             <CardContent>
-                                <Typography variant={p} sx={{ fontSize: 14, textAlign: 'left',}} color="text.secondary" gutterBottom>
-                                    {data ? `Feels like ${data.main.feels_like}` : 'no data'}
+                                {
+                                    data && data.weather[0].main == 'Clear' ? <WbSunnyIcon sx={{ fontSize: '5rem', color: colorThemes.simple.accentColor}}/> : ''
+                                }
+                                <Typography sx={{ fontSize: '1rem', fontWeight: 'bold'}} color="text.secondary" gutterBottom>
+                                    {data ? `${data.weather[0].description}` : 'no data'}
                                 </Typography>
                             </CardContent>
                         </Card>
 
-                        <Card sx={{ minWidth: isMobile ? '98%' : '40%', my: '.25rem'}}>
+                        <Card sx={{ minWidth: isMobile ? '98%' : '40%', m: '.25rem 0'}}>
                             <CardContent>
                                 <Typography variant='h2' sx={{ fontSize: 25, }} color="text.secondary" gutterBottom>
                                     {data ? `${data.name} ${data.sys.country}` : 'No data found'}
                                 </Typography>
 
                                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                                     <Typography variant='h2' sx={{ fontSize: 18, }} color="text.secondary" gutterBottom>
+                                     <Typography sx={{ fontSize: '1rem', }} color="text.secondary" gutterBottom>
                                         {/* CHECK TO SEE IF THERE IS DATA, IF YES, CREATE A P TAG, WITH A NESTED SPAN TAG , ADD DATE IN TAG*/}
                                         {
                                             data ? 
-                                            <Typography>low <span style={{color: colorThemes.simple.accentColor, fontWeight: 'bold'}}>
+                                            <Typography>low <span style={{color: colorThemes.simple.blue, fontWeight: 'bold'}}>
                                                 {parseInt((data.main.temp_min - 273.15) * 1.8 + 32)}&deg;F</span>
                                             </Typography> 
                                                 : 'No data'
@@ -147,7 +152,7 @@ const Weather = () => {
                                         <span>&deg;F</span>
                                     </Typography>
 
-                                    <Typography variant='h2' sx={{ fontSize: '1rem', }} color="text.secondary" gutterBottom>
+                                    <Typography sx={{ fontSize: '1rem', }} color="text.secondary" gutterBottom>
                                         {/* CHECK TO SEE IF THERE IS DATA, IF YES, CREATE A P TAG, WITH A NESTED SPAN TAG , ADD DATE IN TAG*/}
                                         {
                                             data ? 
@@ -158,32 +163,23 @@ const Weather = () => {
                                         }
                                     </Typography>
                                 </Box>
-                                <Typography variant='h2' sx={{ fontSize: 17, mb: '1rem'}} color="text.secondary" gutterBottom>
-                                    {data ? `Feels like ${parseInt((data.main.feels_like - 273.15) * 1.8 + 32)}` : 'no data'}
-                                    <span>&deg;F</span>
+                                <Typography sx={{ fontSize: '1rem',}} color="text.secondary" gutterBottom>
+                                    {/* THIS BLOCK OF CODE BELOW DISPLAYS FEELS LIKE TEMPERATURE */}
+                                    {
+                                        data ? 
+                                        <Typography>It currently feels like <span style={{color: colorThemes.simple.accentColor, fontWeight: 'bold'}}>
+                                            {parseInt((data.main.feels_like - 273.15) * 1.8 + 32)}&deg;F</span> in {data.name}
+                                        </Typography> 
+                                            : 'No data'
+                                    }
                                 </Typography>
 
-                                {/* <Box sx={{
-                                    display: 'flex',
-                                    gap: '1rem',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                }}>
-                                    <Typography variant='h2' sx={{ fontSize: 18,}} color="text.secondary" gutterBottom>
-                                        {data ? `low ${parseInt((data.main.temp_min - 273.15) * 1.8 + 32)}` : 'No data'} 
-                                        <span>&deg;F</span>
-                                    </Typography>
-                                    <Typography variant='h2' sx={{ fontSize: 18,}} color="text.secondary" gutterBottom>
-                                        {data ? `high ${parseInt((data.main.temp_max - 273.15) * 1.8 + 32)}` : 'No data'} 
-                                        <span>&deg;F</span>
-                                    </Typography>
-                                </Box> */}
                             </CardContent>
                             </Card>
 
                             <Card sx={{ minWidth: isMobile ? '98%' : '25%', my: '.25rem' }}>
                             <CardContent>
-                                <Typography variant={p} sx={{ fontSize: 14, textAlign: 'left',}} color="text.secondary" gutterBottom>
+                                <Typography sx={{ fontSize: '1rem', textAlign: 'left',}} color="text.secondary" gutterBottom>
                                     {data ? `Feels like ${data.main.feels_like}` : 'no data'}
                                 </Typography>
                             </CardContent>
