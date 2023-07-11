@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { 
     Box, 
-    Button, 
     Card, 
-    CardActions, 
     CardContent, 
     Typography,
     useMediaQuery,
 } from "@mui/material";
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
+import ThermostatIcon from '@mui/icons-material/Thermostat';
 import { colorThemes, fonts } from "../theme";
 import FlexBetween from "./flexBetween";
 
@@ -80,7 +79,7 @@ const Weather = () => {
                     {citySelect.map((city) => (
                         <Typography 
                             sx={{ 
-                                fontSize: isMobile ? '.8rem' : '1rem', 
+                                fontSize: isMobile ? '.98rem' : '1rem', 
                                 cursor: 'pointer', 
                                 m: '0',
                                 '&:hover':{ 
@@ -105,7 +104,7 @@ const Weather = () => {
                         value={search}
                         onChange={e => setSearch(e.target.value)}
                         style={{
-                            width: !isMobile ? '65%' : '84%',
+                            width: !isMobile ? '65%' : '86%',
                             padding: !isMobile ? '.5rem' : '.4rem',
                             fontSize: !isMobile ? '1.1rem' : '.8rem',
                         }}
@@ -119,7 +118,7 @@ const Weather = () => {
                                 {
                                     data && data.weather[0].main == 'Clear' ? <WbSunnyIcon sx={{ fontSize: '5rem', color: colorThemes.simple.accentColor}}/> : ''
                                 }
-                                <Typography sx={{ fontSize: '1rem', fontWeight: 'bold'}} color="text.secondary" gutterBottom>
+                                <Typography sx={{ fontSize: '1rem', fontWeight: '500'}} color="text.secondary" gutterBottom>
                                     {data ? `${data.weather[0].description}` : 'no data'}
                                 </Typography>
                             </CardContent>
@@ -131,7 +130,7 @@ const Weather = () => {
                                     {data ? `${data.name} ${data.sys.country}` : 'No data found'}
                                 </Typography>
 
-                                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem'}}>
                                      <Typography sx={{ fontSize: '1rem', }} color="text.secondary" gutterBottom>
                                         {/* CHECK TO SEE IF THERE IS DATA, IF YES, CREATE A P TAG, WITH A NESTED SPAN TAG , ADD DATE IN TAG*/}
                                         {
@@ -142,15 +141,17 @@ const Weather = () => {
                                                 : 'No data'
                                         }
                                     </Typography>
-                                    
-
-                                    <Typography variant='h2' 
-                                        sx={{ fontSize: 50, fontWeight: 'bold', margin: '1rem', color: transparent }}
-                                        gutterBottom
-                                    >
-                                        {data ? parseInt((data.main.temp - 273.15) * 1.8 + 32) : '0'} 
-                                        <span>&deg;F</span>
-                                    </Typography>
+                                
+                                    <Box>
+                                        {
+                                            data ? 
+                                            <Typography sx={{fontSize: '3.5rem'}}>
+                                                {parseInt((data.main.temp - 273.15) * 1.8 + 32)} 
+                                                <span>&deg;</span> 
+                                            </Typography>: ''
+                                        } 
+                                        {/* <span>&deg;F</span> */}
+                                    </Box>
 
                                     <Typography sx={{ fontSize: '1rem', }} color="text.secondary" gutterBottom>
                                         {/* CHECK TO SEE IF THERE IS DATA, IF YES, CREATE A P TAG, WITH A NESTED SPAN TAG , ADD DATE IN TAG*/}
@@ -179,9 +180,15 @@ const Weather = () => {
 
                             <Card sx={{ minWidth: isMobile ? '98%' : '25%', my: '.25rem' }}>
                             <CardContent>
-                                <Typography sx={{ fontSize: '1rem', textAlign: 'left',}} color="text.secondary" gutterBottom>
-                                    {data ? `Feels like ${data.main.feels_like}` : 'no data'}
-                                </Typography>
+                                {
+                                    data ? 
+                                    <Box sx={{}}>
+                                        <Typography>{`humidity: ${data.main.humidity}%`}</Typography>
+                                        <Typography>{`pressure: ${data.main.pressure}`}</Typography>
+                                        <Typography>{`wind: ${parseInt(data.wind.speed)} mph ${data.wind.deg}`}&deg;</Typography>
+                                    </Box>
+                                    : null
+                                }
                             </CardContent>
                         </Card>
                     </FlexBetween>
