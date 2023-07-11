@@ -5,8 +5,8 @@ import styled from "@emotion/styled";
 const FlexBetween = styled('Box') ({
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '.5rem',
     textAlign: 'center',
     margin: '1rem',
 });

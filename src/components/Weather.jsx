@@ -35,7 +35,7 @@ const Weather = () => {
     // const cityName = data.name;
     // const countryName = data.sys.country;
     // const temperature = data.main.temp;
-    // temperature = (temperature - 273.15) * 9/5 + 32;
+    // temperature = parseInt((temperature - 273.15) * 1.8 + 32)
     // const feelsLike = data.main.feels_like;
     // const minTemp = data.main.temp_min;
     // const maxemp = data.main.temp_max;
@@ -45,6 +45,9 @@ const Weather = () => {
     // const weatherIcon = data.weather.icon;
     // const windSpeed = data.wind.speed;
     // const speedDirection = data.wind.deg;
+
+    //City selections
+    const citySelect = ['New York', "Boston", "Washington DC", "Los Angeles"];
 
     //styles from theme
     const transparent = colorThemes.simple.transparent;
@@ -56,25 +59,37 @@ const Weather = () => {
 
     return (
         <Box sx={{margin: '0', padding: '0'}}>
-            <Typography sx={{fontSize: '1.1rem', color: 'white', textAlign: 'center', marginBottom: '1rem',}}>
-                Weather Forcaster
-            </Typography>   
-
             <Box 
             sx={{
                 backgroundColor: transparent,
                 color: colorThemes.simple.white,
                 padding: isMobile ? '1rem .75rem' : '1.5rem 1rem',
-                width: !isMobile ? '500px' : '85vw',
+                width: !isMobile ? '60vw' : '85vw',
                 minHeight: '55vh',
                 boxShadow: 2,
             }}
             >
+                 <Typography 
+                    variant="h1" 
+                    sx={{fontSize: '2rem', color: 'white', textAlign: 'center', marginBottom: '1rem', color: colorThemes.simple.accentColor}}
+                 >
+                HT Weather
+            </Typography>   
                 <FlexBetween>
-                    <Typography sx={{ fontSize: isMobile ? '.8rem' : '1rem', cursor: 'pointer', '&:hover':{color: colorThemes.simple.accentColor}}}>New York</Typography>
-                    <Typography sx={{ fontSize: isMobile ? '.8rem' : '1rem', cursor: 'pointer', '&:hover':{color: colorThemes.simple.accentColor}}}>Boston</Typography>
-                    <Typography sx={{ fontSize: isMobile ? '.8rem' : '1rem', cursor: 'pointer', '&:hover':{color: colorThemes.simple.accentColor}}}>Washington DC</Typography>
-                    <Typography sx={{ fontSize: isMobile ? '.8rem' : '1rem', cursor: 'pointer', '&:hover':{color: colorThemes.simple.accentColor}}}>Los Angeles</Typography>
+                    {citySelect.map((city) => (
+                        <Typography 
+                            sx={{ 
+                                fontSize: isMobile ? '.8rem' : '1rem', 
+                                cursor: 'pointer', 
+                                mx: '.5rem',
+                                '&:hover':{ 
+                                    color: colorThemes.simple.accentColor 
+                                }
+                            }}
+                        >
+                            {city} {/* Each indvidual element in the array */}
+                        </Typography>
+                    ))}
                 </FlexBetween>
                 
                 <Box sx={{
@@ -97,18 +112,50 @@ const Weather = () => {
                 </Box>
                 <Box>
                     <FlexBetween>
-                        <Card sx={{ minWidth: isMobile ? '98%' : '48%', my: '.25rem'}}>
+                    <Card sx={{ minWidth: isMobile ? '98%' : '25%', my: '.25rem' }}>
+                            <CardContent>
+                                <Typography variant={p} sx={{ fontSize: 14, textAlign: 'left',}} color="text.secondary" gutterBottom>
+                                    {data ? `Feels like ${data.main.feels_like}` : 'no data'}
+                                </Typography>
+                            </CardContent>
+                        </Card>
+
+                        <Card sx={{ minWidth: isMobile ? '98%' : '40%', my: '.25rem'}}>
                             <CardContent>
                                 <Typography variant='h2' sx={{ fontSize: 25, }} color="text.secondary" gutterBottom>
-                                    {data ? `${data.name}, ${data.sys.country}` : 'No data found'}
+                                    {data ? `${data.name} ${data.sys.country}` : 'No data found'}
                                 </Typography>
-                                <Box>
+
+                                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                                     <Typography variant='h2' sx={{ fontSize: 18, }} color="text.secondary" gutterBottom>
+                                        {/* CHECK TO SEE IF THERE IS DATA, IF YES, CREATE A P TAG, WITH A NESTED SPAN TAG , ADD DATE IN TAG*/}
+                                        {
+                                            data ? 
+                                            <Typography>low <span style={{color: colorThemes.simple.accentColor, fontWeight: 'bold'}}>
+                                                {parseInt((data.main.temp_min - 273.15) * 1.8 + 32)}&deg;F</span>
+                                            </Typography> 
+                                                : 'No data'
+                                        }
+                                    </Typography>
+                                    
+
                                     <Typography variant='h2' 
                                         sx={{ fontSize: 50, fontWeight: 'bold', margin: '1rem', color: transparent }}
                                         gutterBottom
                                     >
-                                        {data ? parseInt((data.main.temp - 273.15) * 1.8 + 32) : 'No data'} 
+                                        {data ? parseInt((data.main.temp - 273.15) * 1.8 + 32) : '0'} 
                                         <span>&deg;F</span>
+                                    </Typography>
+
+                                    <Typography variant='h2' sx={{ fontSize: '1rem', }} color="text.secondary" gutterBottom>
+                                        {/* CHECK TO SEE IF THERE IS DATA, IF YES, CREATE A P TAG, WITH A NESTED SPAN TAG , ADD DATE IN TAG*/}
+                                        {
+                                            data ? 
+                                            <Typography>high <span style={{color: colorThemes.simple.accentColor, fontWeight: 'bold'}}>
+                                                {parseInt((data.main.temp_max - 273.15) * 1.8 + 32)}&deg;F</span>
+                                            </Typography> 
+                                                : 'No data'
+                                        }
                                     </Typography>
                                 </Box>
                                 <Typography variant='h2' sx={{ fontSize: 17, mb: '1rem'}} color="text.secondary" gutterBottom>
@@ -116,7 +163,7 @@ const Weather = () => {
                                     <span>&deg;F</span>
                                 </Typography>
 
-                                <Box sx={{
+                                {/* <Box sx={{
                                     display: 'flex',
                                     gap: '1rem',
                                     alignItems: 'center',
@@ -130,16 +177,15 @@ const Weather = () => {
                                         {data ? `high ${parseInt((data.main.temp_max - 273.15) * 1.8 + 32)}` : 'No data'} 
                                         <span>&deg;F</span>
                                     </Typography>
-                                </Box>
+                                </Box> */}
                             </CardContent>
                             </Card>
 
-                            <Card sx={{ minWidth: isMobile ? '98%' : '49%', my: '.25rem' }}>
+                            <Card sx={{ minWidth: isMobile ? '98%' : '25%', my: '.25rem' }}>
                             <CardContent>
                                 <Typography variant={p} sx={{ fontSize: 14, textAlign: 'left',}} color="text.secondary" gutterBottom>
                                     {data ? `Feels like ${data.main.feels_like}` : 'no data'}
                                 </Typography>
-
                             </CardContent>
                         </Card>
                     </FlexBetween>
