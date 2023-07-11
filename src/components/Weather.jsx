@@ -107,7 +107,7 @@ const Weather = () => {
                                         sx={{ fontSize: 50, fontWeight: 'bold', margin: '1rem', color: transparent }}
                                         gutterBottom
                                     >
-                                        {data ? parseInt((data.main.temp - 273.15) * 9/5 + 32) : 'No data'} 
+                                        {data ? parseInt((data.main.feels_like - 273.15) * 9/5 + 32) : 'No data'} 
                                         <span>&deg;F</span>
                                     </Typography>
                                 </Box>
