@@ -107,12 +107,12 @@ const Weather = () => {
                                         sx={{ fontSize: 50, fontWeight: 'bold', margin: '1rem', color: transparent }}
                                         gutterBottom
                                     >
-                                        {data ? parseInt((data.main.feels_like - 273.15) * 9/5 + 32) : 'No data'} 
+                                        {data ? parseInt((data.main.temp - 273.15) * 1.8 + 32) : 'No data'} 
                                         <span>&deg;F</span>
                                     </Typography>
                                 </Box>
                                 <Typography variant='h2' sx={{ fontSize: 17, mb: '1rem'}} color="text.secondary" gutterBottom>
-                                    {data ? `Feels like ${parseInt((data.main.feels_like - 273.15) * 9/5 + 32)}` : 'no data'}
+                                    {data ? `Feels like ${parseInt((data.main.feels_like - 273.15) * 1.8 + 32)}` : 'no data'}
                                     <span>&deg;F</span>
                                 </Typography>
 
@@ -123,11 +123,11 @@ const Weather = () => {
                                     justifyContent: 'center',
                                 }}>
                                     <Typography variant='h2' sx={{ fontSize: 18,}} color="text.secondary" gutterBottom>
-                                        {data ? `low ${parseInt((data.main.temp_min - 273.15) * 9/5 + 32)}` : 'No data'} 
+                                        {data ? `low ${parseInt((data.main.temp_min - 273.15) * 1.8 + 32)}` : 'No data'} 
                                         <span>&deg;F</span>
                                     </Typography>
                                     <Typography variant='h2' sx={{ fontSize: 18,}} color="text.secondary" gutterBottom>
-                                        {data ? `high ${parseInt((data.main.temp_max - 273.15) * 9/5 + 32)}` : 'No data'} 
+                                        {data ? `high ${parseInt((data.main.temp_max - 273.15) * 1.8 + 32)}` : 'No data'} 
                                         <span>&deg;F</span>
                                     </Typography>
                                 </Box>
