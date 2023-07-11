@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { 
     Box, 
-    TextField, 
+    Button, 
+    Card, 
+    CardActions, 
+    CardContent, 
     Typography,
     useMediaQuery,
 } from "@mui/material";
@@ -12,44 +16,46 @@ import SearchIcon from '@mui/icons-material/Search';
 const Weather = () => {
     //styles from theme
     const transparent = colorThemes.simple.transparent;
-    const textColor = colorThemes.simple.textColor;
     const isMobile = useMediaQuery('(max-width: 500px)');
     const h1 = fonts.heading1;
     const h2 = fonts.heading2;
     const h3 = fonts.heading3;
     const p = fonts.paragraph;
-
-    //get current time
-    const [time, setTime] = useState('');
-    useEffect(() => {
-        const interval = setInterval(() => {
-            const date = new Date();
-            const hours = String(date.getHours()).padStart(2,'0');
-            const minutes = String(date.getMinutes()).padStart(2,'0');
-            const seconds = String(date.getSeconds()).padStart(2,'0');
-            const time = `${hours}:${minutes}:${seconds}`
-
-            setTime(time);
-        }, 1000);
-
-        return () => clearInterval(interval)
-    }, []);
     
 
-    //Get data from search
-    const [apiData, setApiData] = useState();
-    const [search, setSearch] = useState("");
+    const [data, setData] = useState([]);
+    const [search, setSearch] = useState("Boston");
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${search}&appid=8214c861b673b37ac8b739c9e228fb0b`);
-            const data = await response.json();
-            console.log(data)
-        }
+            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(search)}&appid=8214c861b673b37ac8b739c9e228fb0b`)
+            .then(response => {
+                if (!response.ok) throw new Error
+                return response.json();
+            })
+            .then(data => {
+                setData(data)
+            })
+            .catch(err => {
+                console.error(err)
+            });
+        };
         fetchData();
-    }, [search]);
+    }, [search])
 
-
+    // const cityName = data.name;
+    // const countryName = data.sys.country;
+    // const temperature = data.main.temp;
+    // temperature = (temperature - 273.15) * 9/5 + 32;
+    // const feelsLike = data.main.feels_like;
+    // const minTemp = data.main.temp_min;
+    // const maxemp = data.main.temp_max;
+    // const pressure = data.main.pressure;
+    // const humidity = data.main.humidity;
+    // const weatherDescriiption = data.weather.description;
+    // const weatherIcon = data.weather.icon;
+    // const windSpeed = data.wind.speed;
+    // const speedDirection = data.wind.deg;
 
     return (
         <Box sx={{margin: '0', padding: '0'}}>
@@ -61,8 +67,8 @@ const Weather = () => {
             sx={{
                 backgroundColor: transparent,
                 color: colorThemes.simple.white,
-                padding: isMobile ? '1rem .75rem' : '1.5rem',
-                width: !isMobile ? '410px' : '85vw',
+                padding: isMobile ? '1rem .75rem' : '1.5rem 1rem',
+                width: !isMobile ? '500px' : '85vw',
                 minHeight: '55vh',
                 boxShadow: 2,
             }}
@@ -83,16 +89,17 @@ const Weather = () => {
                     <input 
                         placeholder="Search city" 
                         name="search"
-                        id="search"
-                        onChange={(e) => setSearch(e.target.value)} 
-                        value={search}
+                        id="search_field"
+                        // value={search}
+                        // onKeyUp={(e) => setSearch(e.target.value)}
+                        onChange={e => setSearch(e.target.value)}
                         style={{
                             width: !isMobile ? '65%' : '80%',
                             padding: !isMobile ? '.5rem' : '.4rem',
                             fontSize: !isMobile ? '1.1rem' : '.8rem',
                         }}
                     />
-                    <SearchIcon 
+                    {/* <SearchIcon 
                         sx={{ 
                             marginLeft:'.5rem', 
                             backgroundColor: colorThemes.simple.secondaryColor,
@@ -106,10 +113,60 @@ const Weather = () => {
                                 cursor: 'pointer',
                             }
                         }}
-                        onClick={(e) => setSearch()}
-                    />
+                    /> */}
                 </Box>
-         
+                <Box>
+                    <FlexBetween>
+                        <Card sx={{ minWidth: isMobile ? '98%' : '48%', my: '.25rem'}}>
+                            <CardContent>
+                                <Typography variant='h2' sx={{ fontSize: 25, }} color="text.secondary" gutterBottom>
+                                    {data ? `${data.name}, ${data.sys.country}` : ''}
+                                </Typography>
+                                <Box>
+                                    <Typography variant='h2' 
+                                        sx={{ fontSize: 50, fontWeight: 'bold', margin: '1rem', color: transparent }}
+                                        gutterBottom
+                                    >
+                                        {data ? parseInt((data.main.temp - 273.15) * 9/5 + 32) : 'No data'} 
+                                        <span>&deg;F</span>
+                                    </Typography>
+                                </Box>
+
+                                <Box sx={{
+                                    display: 'flex',
+                                    gap: '1rem',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                }}>
+                                    <Typography variant='h2' sx={{ fontSize: 20,}} color="text.secondary" gutterBottom>
+                                        {data ? `Low ${parseInt((data.main.temp_min - 273.15) * 9/5 + 32)}` : 'No data'} 
+                                        <span>&deg;F</span>
+                                    </Typography>
+                                <Typography variant='h2' sx={{ fontSize: 20,}} color="text.secondary" gutterBottom>
+                                        {data ? `High ${parseInt((data.main.temp_max - 273.15) * 9/5 + 32)}` : 'No data'} 
+                                        <span>&deg;F</span>
+                                    </Typography>
+                                </Box>
+
+                            </CardContent>
+                            <CardActions>
+                                <Button size="small">Learn More</Button>
+                            </CardActions>
+                            </Card>
+
+                            <Card sx={{ minWidth: isMobile ? '98%' : '49%', my: '.25rem' }}>
+                            <CardContent>
+                                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                                    Temperature
+                                </Typography>
+
+                            </CardContent>
+                            <CardActions>
+                                <Button size="small">Learn More</Button>
+                            </CardActions>
+                        </Card>
+                    </FlexBetween>
+                </Box>
             </Box>
         </Box>
     );
