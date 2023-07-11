@@ -167,7 +167,7 @@ const Weather = () => {
                                     {/* THIS BLOCK OF CODE BELOW DISPLAYS FEELS LIKE TEMPERATURE */}
                                     {
                                         data ? 
-                                        <Typography>Currently feels like <span style={{color: colorThemes.simple.accentColor, fontWeight: 'bold'}}>
+                                        <Typography>currently feels like <span style={{color: colorThemes.simple.accentColor, fontWeight: 'bold'}}>
                                             {parseInt((data.main.feels_like - 273.15) * 1.8 + 32)}&deg;F</span> in {data.name}
                                         </Typography> 
                                             : 'No data'
