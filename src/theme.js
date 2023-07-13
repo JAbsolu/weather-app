@@ -3,12 +3,15 @@ export const colorThemes = {
     simple: {
       primaryColor: '#00A9CE',
       secondaryColor: '#F0F9FF',
-      accentColor: '#FF6D3F',
-      blue: '#89cff0',
+      accentColor: '#FFDF22',
       backgroundColor: '#FFFFFF',
       textColor: '#333333',
       transparent: '#000000c2',
+      transparentWhite: '#ffffffcc',
       white: '#fff',
+      orange: '#FF6D3F',
+      blue: '#89cff0',
+      skyBlue: 'rgb(0 169 206 / 84%)',
     }
   };
   

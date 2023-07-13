@@ -38,6 +38,13 @@ const Weather = () => {
 
     //styles from theme
     const transparent = colorThemes.simple.transparent;
+    const transpWhite = colorThemes.simple.transparentWhite;
+    const accent = colorThemes.simple.accentColor;
+    const skyBlue = colorThemes.simple.skyBlue;
+    const white = colorThemes.simple.white;
+    const blackText = colorThemes.simple.textColor;
+
+    //Media query
     const isMobile = useMediaQuery('(max-width: 500px)');
 
     const h1 = fonts.heading1;
@@ -103,20 +110,28 @@ const Weather = () => {
                         name="search"
                         onChange={e => setSearch(e.target.value)}
                         style={{
-                            width: !isMobile ? '65%' : '86%',
+                            width: !isMobile ? '63.5%' : '86%',
                             padding: !isMobile ? '.5rem' : '.4rem',
-                            fontSize: !isMobile ? '1.1rem' : '.8rem',
+                            fontSize: '1rem',
                         }}
                     />
                 </Box>
                 <Box>
                     <FlexBetween>
-                        <Card sx={{ minWidth: isMobile ? '98%' : '25%', my: isMobile ? '0' : '.25rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <Card sx={{ 
+                            minWidth: isMobile ? '98%' : '25%',
+                            my: isMobile ? '0' : '.25rem', 
+                            display: 'flex', 
+                            justifyContent: 'center', 
+                            alignItems: 'center',
+                            maxWidth: '358px',
+                            backgroundColor: skyBlue,
+                        }}>
                             {/* SHOW DIFFERENT ICON BASED ON DESCRIPTION */}
                             <CardContent>
                                 {
                                     data && data.weather[0].main == 'Clear' ? 
-                                        <WbSunnyIcon sx={{ fontSize: isMobile ? '4rem' : '7rem', color: colorThemes.simple.accentColor}}/> 
+                                        <WbSunnyIcon sx={{ fontSize: isMobile ? '4rem' : '7rem', color: colorThemes.simple.accentColor,}}/> 
                                         : data && data.weather[0].description == 'light rain' ? <ThunderstormIcon sx={{ fontSize: isMobile ? '4rem' : '7rem', color: colorThemes.simple.primaryColor}}/> 
                                         : data && data.weather[0].description == 'cloudy' ? <CloudIcon sx={{ fontSize: isMobile ? '4rem' : '7rem', color: colorThemes.simple.primaryColor}}/> 
                                         : <WbSunnyIcon sx={{ fontSize: isMobile ? '4rem' : '7rem', color: colorThemes.simple.accentColor}}/> 
@@ -125,7 +140,7 @@ const Weather = () => {
                                 {/* WEATHER DESCRIPTION */}
                                 {
                                     data ? 
-                                    <Typography sx={{ fontSize: '1.5rem',}} color="text.secondary">
+                                    <Typography sx={{ fontSize: '1.2rem', color: white,}}>
                                         {data.weather[0].description}
                                     </Typography> 
                                     : 'loading..'
@@ -137,27 +152,28 @@ const Weather = () => {
                                     <Box 
                                         sx={{
                                             display: 'flex', 
-                                            gap: isMobile ? '.5rem' : '.8rem',
+                                            gap: isMobile ? '.3rem' : '.8rem',
                                             justifyContent: 'center',
                                             alignItems: 'center',
-                                            mt: '1.5rem',
+                                            mt: '1.2rem',
                                             mb: '0',
                                             flexWrap: 'wrap',
+                                            color: white,
                                         }}
                                     >
-                                        <Typography sx={{fontSize: isMobile ? '.78rem' : '.9rem', fontWeight: '500'}}>Humdity: {data.main.humidity}%</Typography>
-                                        <Typography sx={{fontSize: isMobile ? '.78rem' : '.9rem', fontWeight: '500'}}>Wind speed: {data.wind.speed} mph</Typography>
-                                        <Typography sx={{fontSize: isMobile ? '.78rem' : '.9rem', fontWeight: '500'}}>Wind dir: {data.wind.deg} &deg;</Typography>
+                                        <Typography sx={{fontSize: isMobile ? '.78rem' : '.8rem', fontWeight: '500'}}>Humdity: {data.main.humidity}%</Typography>
+                                        <Typography sx={{fontSize: isMobile ? '.78rem' : '.8rem', fontWeight: '500'}}>Wind speed: {data.wind.speed} mph</Typography>
+                                        <Typography sx={{fontSize: isMobile ? '.78rem' : '.8rem', fontWeight: '500'}}>Wind dir: {data.wind.deg} &deg;</Typography>
                                     </Box>
                                     : null
                                 } 
                             </CardContent>
                         </Card>
 
-                        <Card sx={{ minWidth: isMobile ? '98%' : '40%', m: isMobile ? '' : '.25rem 0'}}>
+                        <Card sx={{ minWidth: isMobile ? '98%' : '40%', maxWidth: '358px', m: isMobile ? '' : '.25rem 0'}}>
                             <CardContent>
-                                <Typography variant='h2' sx={{ fontSize: isMobile ? '2rem' : '3.3rem', fontWeight: 'bold', color: colorThemes.simple.textColor }} color="text.secondary">
-                                    {data ? `${data.name} ${data.sys.country}` : 'loading..'}
+                                <Typography variant='h2' sx={{ fontSize: isMobile ? '1.8rem' : '3rem', fontWeight: '600', color: transparent}}>
+                                    {data ? `${data.name}` : 'loading..'}
                                 </Typography>
 
                                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem'}}>
@@ -165,7 +181,7 @@ const Weather = () => {
                                         {/* CHECK TO SEE IF THERE IS DATA, IF YES, CREATE A P TAG, WITH A NESTED SPAN TAG , ADD DATE IN TAG*/}
                                         {
                                             data ? 
-                                            <Typography>low <span style={{color: colorThemes.simple.primaryColor, fontWeight: 'bold'}}>
+                                            <Typography>low: <span style={{color: colorThemes.simple.primaryColor, fontWeight: 'bold'}}>
                                                 {parseInt((data.main.temp_min - 273.15) * 1.8 + 32)}&deg;F</span>
                                             </Typography> 
                                                 : 'loading..'
@@ -175,19 +191,18 @@ const Weather = () => {
                                     <Box>
                                         {
                                             data ? 
-                                            <Typography sx={{fontSize: isMobile ? '4rem' : '5rem', fontWeight: 'bold', mx:'1.5rem'}}>
+                                            <Typography sx={{fontSize: isMobile ? '3.5rem' : '4.5rem', fontWeight: 'bold', mx:'1.5rem'}}>
                                                 {parseInt((data.main.temp - 273.15) * 1.8 + 32)} 
                                                 <span>&deg;</span> 
                                             </Typography>: ''
                                         } 
-                                        {/* <span>&deg;F</span> */}
                                     </Box>
 
                                     <Typography sx={{ fontSize: '1rem', }} color="text.secondary" gutterBottom>
                                         {/* CHECK TO SEE IF THERE IS DATA, IF YES, CREATE A P TAG, WITH A NESTED SPAN TAG , ADD DATE IN TAG*/}
                                         {
                                             data ? 
-                                            <Typography>high <span style={{color: colorThemes.simple.accentColor, fontWeight: 'bold'}}>
+                                            <Typography>high: <span style={{color: colorThemes.simple.orange, fontWeight: 'bold'}}>
                                                 {parseInt((data.main.temp_max - 273.15) * 1.8 + 32)}&deg;F</span>
                                             </Typography> 
                                                 : 'loading..'
@@ -198,8 +213,8 @@ const Weather = () => {
                                     {/* THIS BLOCK OF CODE BELOW DISPLAYS FEELS LIKE TEMPERATURE */}
                                     {
                                         data ? 
-                                        <Typography sx={{fontSize: isMobile ? '.8rem' : '.9rem', mt: '.5rem'}}>currently feels like <span style={{color: colorThemes.simple.accentColor, fontWeight: 'bold'}}>
-                                            {parseInt((data.main.feels_like - 273.15) * 1.8 + 32)}&deg;F</span> in {data.name}
+                                        <Typography sx={{fontSize: isMobile ? '.8rem' : '.85rem', mt: '.5rem',}}>currently feels like <span style={{color: blackText, fontWeight: 'bold'}}>
+                                            {parseInt((data.main.feels_like - 273.15) * 1.8 + 32)}&deg;F</span> in {data.name}, {data.sys.country}
                                         </Typography> 
                                             : 'loading..'
                                     }
