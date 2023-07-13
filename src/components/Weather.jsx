@@ -69,7 +69,13 @@ const Weather = () => {
                  >
                     Daily Weather
                 </Typography>   
-                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', m: '1rem 0', gap: '.8rem'}}>
+                <Box sx={{ 
+                        display: 'flex', 
+                        justifyContent: 'center', 
+                        alignItems: 'center', 
+                        m: '1rem 0', 
+                        gap: '.8rem'
+                }}>
                     {citySelect.map((city) => (
                         <Typography 
                             sx={{ 
@@ -95,7 +101,6 @@ const Weather = () => {
                     <input 
                         placeholder="Search city" 
                         name="search"
-                        value={search}
                         onChange={e => setSearch(e.target.value)}
                         style={{
                             width: !isMobile ? '65%' : '86%',
@@ -111,10 +116,10 @@ const Weather = () => {
                             <CardContent>
                                 {
                                     data && data.weather[0].main == 'Clear' ? 
-                                        <WbSunnyIcon sx={{ fontSize: '8.5rem', color: colorThemes.simple.accentColor}}/> 
-                                            : data && data.weather[0].description == 'light rain' ? <ThunderstormIcon sx={{ fontSize: '8.5rem', color: colorThemes.simple.primaryColor}}/> 
-                                                : data && data.weather[0].description == 'cloudy' ? <CloudIcon sx={{ fontSize: '8.5rem', color: colorThemes.simple.primaryColor}}/> 
-                                                    : <WbSunnyIcon sx={{ fontSize: '8.5rem', color: colorThemes.simple.accentColor}}/> 
+                                        <WbSunnyIcon sx={{ fontSize: isMobile ? '4rem' : '7rem', color: colorThemes.simple.accentColor}}/> 
+                                        : data && data.weather[0].description == 'light rain' ? <ThunderstormIcon sx={{ fontSize: isMobile ? '4rem' : '7rem', color: colorThemes.simple.primaryColor}}/> 
+                                        : data && data.weather[0].description == 'cloudy' ? <CloudIcon sx={{ fontSize: isMobile ? '4rem' : '7rem', color: colorThemes.simple.primaryColor}}/> 
+                                        : <WbSunnyIcon sx={{ fontSize: isMobile ? '4rem' : '7rem', color: colorThemes.simple.accentColor}}/> 
                                 }
 
                                 {/* WEATHER DESCRIPTION */}
@@ -123,7 +128,7 @@ const Weather = () => {
                                     <Typography sx={{ fontSize: '1.5rem',}} color="text.secondary">
                                         {data.weather[0].description}
                                     </Typography> 
-                                    : 'no data'
+                                    : 'loading..'
                                 }
 
                                 {/* WEATHER AND WIND  INFO */}
@@ -152,7 +157,7 @@ const Weather = () => {
                         <Card sx={{ minWidth: isMobile ? '98%' : '40%', m: isMobile ? '' : '.25rem 0'}}>
                             <CardContent>
                                 <Typography variant='h2' sx={{ fontSize: isMobile ? '2rem' : '3.3rem', fontWeight: 'bold', color: colorThemes.simple.textColor }} color="text.secondary">
-                                    {data ? `${data.name} ${data.sys.country}` : 'No data found'}
+                                    {data ? `${data.name} ${data.sys.country}` : 'loading..'}
                                 </Typography>
 
                                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem'}}>
@@ -163,7 +168,7 @@ const Weather = () => {
                                             <Typography>low <span style={{color: colorThemes.simple.primaryColor, fontWeight: 'bold'}}>
                                                 {parseInt((data.main.temp_min - 273.15) * 1.8 + 32)}&deg;F</span>
                                             </Typography> 
-                                                : 'No data'
+                                                : 'loading..'
                                         }
                                     </Typography>
                                 
@@ -185,7 +190,7 @@ const Weather = () => {
                                             <Typography>high <span style={{color: colorThemes.simple.accentColor, fontWeight: 'bold'}}>
                                                 {parseInt((data.main.temp_max - 273.15) * 1.8 + 32)}&deg;F</span>
                                             </Typography> 
-                                                : 'No data'
+                                                : 'loading..'
                                         }
                                     </Typography>
                                 </Box>
@@ -196,19 +201,13 @@ const Weather = () => {
                                         <Typography sx={{fontSize: isMobile ? '.8rem' : '.9rem', mt: '.5rem'}}>currently feels like <span style={{color: colorThemes.simple.accentColor, fontWeight: 'bold'}}>
                                             {parseInt((data.main.feels_like - 273.15) * 1.8 + 32)}&deg;F</span> in {data.name}
                                         </Typography> 
-                                            : 'No data'
+                                            : 'loading..'
                                     }
                                     
                                 </Box>
 
                             </CardContent>
                             </Card>
-
-                            <Card sx={{ minWidth: isMobile ? '98%' : '25%', my: isMobile ? '' : '.25rem' }}>
-                            <CardContent>
-                               Add clock here
-                            </CardContent>
-                        </Card>
                     </FlexBetween>
                 </Box>
             </Box>
