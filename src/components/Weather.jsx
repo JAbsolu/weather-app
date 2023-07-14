@@ -14,10 +14,12 @@ import cloudsSun from '../assets/cloud-sun.svg';
 import cloudRain from '../assets/cloud-rain.svg';
 import storm from '../assets/cloud-lightning-rain.svg';
 import fog from '../assets/fog.svg';
+import snow from '../assets/cloud-snow.svg';
+import background from '../assets/background.jpeg';
 
 const Weather = () => {
     const [data, setData] = useState();
-    const [search, setSearch] = useState('New York');
+    const [search, setSearch] = useState('');
 
     // GET WEATHER DATA AND LIVE LOCATION
     useEffect(() => {
@@ -51,8 +53,8 @@ const Weather = () => {
                 const response = await fetch(url, options);
                 const result = await response.json();
                 let city = result.city.name;
+                if (!city) setSearch('New York');
                 setSearch(city)
-                console.log(city);
             } catch (error) {
                 console.error(error);
             }
@@ -84,14 +86,21 @@ const Weather = () => {
     const p = fonts.paragraph;
 
     return (
-        <Box sx={{margin: '0', padding: '0'}}>
+        <Box sx={{
+            margin: '0', 
+            padding: '0', 
+            display: 'flex', 
+            justifyContent: 'center', 
+            alignItems: 'center', 
+            backgroundImage: `url(${background})`,
+        }}>
             <Box 
             sx={{
                 backgroundColor: transparent,
                 color: colorThemes.simple.white,
-                padding: isMobile ? '1rem .2rem' : '1.5rem 1rem',
+                padding: isMobile ? '1rem .2rem' : '.5rem 1rem',
                 width: !isMobile ? '97.8vw' : '98vw',
-                minHeight: isMobile ? '95.8vh' : '55vh',
+                minHeight: isMobile ? '95.8vh' : '53vh',
                 boxShadow: 2,
             }}
             >
@@ -102,7 +111,7 @@ const Weather = () => {
                         color: 'white', 
                         textAlign: 'center', 
                         marginBottom: isMobile ? '2rem' : '1rem', 
-                        marginTop: isMobile ? '2rem' : '' , 
+                        marginTop: '2rem', 
                         color: colorThemes.simple.accentColor}}
                  >
                     Daily Weather
@@ -136,19 +145,20 @@ const Weather = () => {
                     justifyContent: 'center',
                     alignItems: 'center',
                     mb: isMobile ? '0' : '1rem',
+                    maxWidth: '1700px',
                 }}>
                     <input 
                         placeholder="Search city" 
                         name="search"
                         onChange={e => setSearch(e.target.value)}
                         style={{
-                            width: !isMobile ? '63.5%' : '86%',
+                            width: !isMobile ? '63%' : '86%',
                             padding: !isMobile ? '.5rem' : '.4rem',
                             fontSize: '1rem',
                         }}
                     />
                 </Box>
-                <Box>
+                <Box sx={{maxWidth: '1700px'}}>
                     <FlexBetween>
                         <Card sx={{ 
                             minWidth: isMobile ? '98%' : '25%',
@@ -168,8 +178,9 @@ const Weather = () => {
                                         : data && data.weather[0].description.includes('storm') ? <img src={storm} width={isMobile ? '80' : '120' } alt='icon'/> 
                                         : data && data.weather[0].description.includes('cloud') ? <img src={clouds} width={isMobile ? '80' : '120' } alt='icon'/>
                                         : data && data.weather[0].description == 'scattered clouds' ? <img src={cloudsSun} width={isMobile ? '80' : '120' } alt='icon'/> 
-                                        : data && data.weather[0].description.includes('mist') ? <img src={cloudsSun} width={isMobile ? '80' : '120' } alt='icon'/> 
-                                        : data && data.weather[0].description.includes('fog') ? <img src={cloudsSun} width={isMobile ? '80' : '120' } alt='icon'/> 
+                                        : data && data.weather[0].description.includes('mist') ? <img src={fog} width={isMobile ? '80' : '120' } alt='icon'/> 
+                                        : data && data.weather[0].description.includes('fog') ? <img src={fog} width={isMobile ? '80' : '120' } alt='icon'/> 
+                                        : data && data.weather[0].description.includes('snow') ? <img src={snow} width={isMobile ? '80' : '120' } alt='icon'/> 
                                         : <WbSunnyIcon sx={{ fontSize: isMobile ? '4rem' : '7rem', color: colorThemes.simple.accentColor}}/> 
                                 }
 
@@ -261,6 +272,7 @@ const Weather = () => {
                             </Card>
                     </FlexBetween>
                 </Box>
+                <Typography sx={{fontSize: '.8rem', textAlign: 'right', mt:'1.5rem'}}>&copy; 2023 Johnson Absolu</Typography>
             </Box>
         </Box>
     );
