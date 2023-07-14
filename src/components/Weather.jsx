@@ -98,7 +98,7 @@ const Weather = () => {
             sx={{
                 backgroundColor: transparent,
                 color: colorThemes.simple.white,
-                padding: isMobile ? '1rem .2rem' : '.5rem 1rem',
+                padding: isMobile ? '1rem .2rem' : '1.5rem 1rem',
                 width: !isMobile ? '97.8vw' : '98vw',
                 minHeight: isMobile ? '95.8vh' : '53vh',
                 boxShadow: 2,
@@ -111,7 +111,7 @@ const Weather = () => {
                         color: 'white', 
                         textAlign: 'center', 
                         marginBottom: isMobile ? '2rem' : '1rem', 
-                        marginTop: '2rem', 
+                        marginTop: isMobile ? '2rem' : '', 
                         color: colorThemes.simple.accentColor}}
                  >
                     Daily Weather
