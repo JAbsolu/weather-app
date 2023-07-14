@@ -16,7 +16,35 @@ import storm from '../assets/cloud-lightning-rain.svg';
 
 const Weather = () => {
     const [data, setData] = useState();
-    const [search, setSearch] = useState("New York");
+    const [search, setSearch] = useState('New York');
+
+
+    // GET USER LIVE LOCATION
+    useEffect(() => {
+        const url = 'https://find-any-ip-address-or-domain-location-world-wide.p.rapidapi.com/iplocation?apikey=873dbe322aea47f89dcf729dcc8f60e8';
+        const getLocation = async () => {
+          const options = {
+              method: 'GET',
+              headers: {
+                  'X-RapidAPI-Key': '52f9330da8msh2c6be0a096fffaap18f69ejsne7443c5751d0',
+                  'X-RapidAPI-Host': 'find-any-ip-address-or-domain-location-world-wide.p.rapidapi.com'
+              }
+          };
+          
+          try {
+              const response = await fetch(url, options);
+              const result = await response.json();
+              let city = result.city
+              setSearch(city)
+              console.log(result.city);
+          } catch (error) {
+              console.error(error);
+          }
+        }
+        getLocation();
+    }, [search])
+    
+
 
     useEffect(() => {
         const fetchData = async () => {
