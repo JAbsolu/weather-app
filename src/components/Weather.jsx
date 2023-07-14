@@ -35,8 +35,14 @@ const Weather = () => {
         fetchData();
     }, [search])
 
+    //get city on click
+    const getCityData = (e) => {
+        let value = e.target.textContent;
+        setSearch(value)
+    }
+
     //City selections
-    const citySelect = ['New York', "Boston", "Washington DC", "Los Angeles"];
+    const citySelect = ['New York', "Boston", "Chicago", "Los Angeles"];
 
     //styles from theme
     const transparent = colorThemes.simple.transparent;
@@ -81,18 +87,19 @@ const Weather = () => {
                         justifyContent: 'center', 
                         alignItems: 'center', 
                         m: '1rem 0', 
-                        gap: '.8rem'
+                        gap: '1rem'
                 }}>
                     {citySelect.map((city) => (
                         <Typography 
                             sx={{ 
-                                fontSize: isMobile ? '.9rem' : '1rem', 
+                                fontSize: isMobile ? '1rem' : '1rem', 
                                 cursor: 'pointer', 
                                 m: '0',
                                 '&:hover':{ 
                                     color: colorThemes.simple.accentColor 
                                 }
                             }}
+                            onClick={getCityData}
                         >
                             {city} {/* Each indvidual element in the array */}
                         </Typography>
