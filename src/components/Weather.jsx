@@ -168,7 +168,8 @@ const Weather = () => {
                                         : data && data.weather[0].description.includes('storm') ? <img src={storm} width={isMobile ? '80' : '120' } alt='icon'/> 
                                         : data && data.weather[0].description.includes('cloud') ? <img src={clouds} width={isMobile ? '80' : '120' } alt='icon'/>
                                         : data && data.weather[0].description == 'scattered clouds' ? <img src={cloudsSun} width={isMobile ? '80' : '120' } alt='icon'/> 
-                                        : data && data.weather[0].description.includes('mist fog') ? <img src={cloudsSun} width={isMobile ? '80' : '120' } alt='icon'/> 
+                                        : data && data.weather[0].description.includes('mist') || ata.weather[0].description.includes('fog')  ? 
+                                            <img src={cloudsSun} width={isMobile ? '80' : '120' } alt='icon'/> 
                                         : <WbSunnyIcon sx={{ fontSize: isMobile ? '4rem' : '7rem', color: colorThemes.simple.accentColor}}/> 
                                 }
 
