@@ -272,7 +272,6 @@ const Weather = () => {
                             </Card>
                     </FlexBetween>
                 </Box>
-                <Typography sx={{fontSize: '.8rem', textAlign: 'right', mt:'1.5rem'}}>&copy; 2023 Johnson Absolu</Typography>
             </Box>
         </Box>
     );

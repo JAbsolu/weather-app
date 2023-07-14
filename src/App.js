@@ -1,6 +1,6 @@
 import {React, useEffect, useState } from "react";
 import Weather from "./components/Weather";
-import { useMediaQuery } from "@mui/material";
+import { Typography, useMediaQuery } from "@mui/material";
 
 function App() {
   const isMobile = useMediaQuery('(max-width: 500px)');
