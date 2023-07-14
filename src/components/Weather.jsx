@@ -9,8 +9,10 @@ import {
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import { colorThemes, fonts } from "../theme";
 import FlexBetween from "./flexBetween";
-import CloudIcon from '@mui/icons-material/Cloud';
-import ThunderstormIcon from '@mui/icons-material/Thunderstorm';
+import clouds from '../assets/clouds.svg';
+import cloudsSun from '../assets/cloud-sun.svg';
+import cloudRain from '../assets/cloud-rain.svg';
+import storm from '../assets/cloud-lightning-rain.svg';
 
 const Weather = () => {
     const [data, setData] = useState();
@@ -38,8 +40,6 @@ const Weather = () => {
 
     //styles from theme
     const transparent = colorThemes.simple.transparent;
-    const transpWhite = colorThemes.simple.transparentWhite;
-    const accent = colorThemes.simple.accentColor;
     const skyBlue = colorThemes.simple.skyBlue;
     const white = colorThemes.simple.white;
     const blackText = colorThemes.simple.textColor;
@@ -131,9 +131,11 @@ const Weather = () => {
                             <CardContent>
                                 {
                                     data && data.weather[0].main == 'Clear' ? 
-                                        <WbSunnyIcon sx={{ fontSize: isMobile ? '4rem' : '7rem', color: colorThemes.simple.accentColor,}}/> 
-                                        : data && data.weather[0].description == 'light rain' ? <ThunderstormIcon sx={{ fontSize: isMobile ? '4rem' : '7rem', color: colorThemes.simple.primaryColor}}/> 
-                                        : data && data.weather[0].description == 'cloudy' ? <CloudIcon sx={{ fontSize: isMobile ? '4rem' : '7rem', color: colorThemes.simple.primaryColor}}/> 
+                                        <WbSunnyIcon sx={{ fontSize: isMobile ? '5rem' : '7rem', color: colorThemes.simple.accentColor,}}/>
+                                        : data && data.weather[0].description.includes('rain') ? <img src={cloudRain} width={isMobile ? '80' : '120' } alt='icon'/> 
+                                        : data && data.weather[0].description.includes('storm') ? <img src={storm} width={isMobile ? '80' : '120' } alt='icon'/> 
+                                        : data && data.weather[0].description.includes('cloud') ? <img src={clouds} width={isMobile ? '80' : '120' } alt='icon'/>
+                                        : data && data.weather[0].description == 'scattered clouds' ? <img src={cloudsSun} width={isMobile ? '80' : '120' } alt='icon'/> 
                                         : <WbSunnyIcon sx={{ fontSize: isMobile ? '4rem' : '7rem', color: colorThemes.simple.accentColor}}/> 
                                 }
 
