@@ -219,7 +219,7 @@ const Weather = () => {
 
                         <Card sx={{ minWidth: isMobile ? '98%' : '40%', maxWidth: '358px', m: isMobile ? '' : '.25rem 0'}}>
                             <CardContent>
-                                <Typography variant='h2' sx={{ fontSize: isMobile ? '2rem' : '3rem', fontWeight: '600', color: transparent}}>
+                                <Typography variant='h2' sx={{ fontSize: isMobile ? '2rem' : '3rem', fontWeight: '600', color: blackText}}>
                                     {data ? `${data.name}` : 'loading..'}
                                 </Typography>
 
@@ -238,7 +238,7 @@ const Weather = () => {
                                     <Box>
                                         {
                                             data ? 
-                                            <Typography sx={{fontSize: isMobile ? '3.8rem' : '4.5rem', fontWeight: 'bold', mx:'1.5rem'}}>
+                                            <Typography sx={{fontSize: isMobile ? '3.8rem' : '4.5rem', fontWeight: 'bold', mx:'1.5rem',}}>
                                                 {parseInt((data.main.temp - 273.15) * 1.8 + 32)} 
                                                 <span>&deg;</span> 
                                             </Typography>: ''
