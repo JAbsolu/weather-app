@@ -7,7 +7,7 @@ export const colorThemes = {
       backgroundColor: '#FFFFFF',
       textColor: '#333333',
       transparent: '#000000c2',
-      transparentWhite: '#ffffffcc',
+      transparentWhite: '#00000091',
       white: '#fff',
       orange: '#FF6D3F',
       blue: '#89cff0',
