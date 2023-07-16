@@ -15,9 +15,11 @@ import cloudRain from '../assets/cloud-rain.svg';
 import storm from '../assets/cloud-lightning-rain.svg';
 import fog from '../assets/fog.svg';
 import snow from '../assets/cloud-snow.svg';
+import wind from '../assets/wind.svg';
 import background from '../assets/background.jpeg';
 
 const Weather = () => {
+    const [userLocation, setUserLocation] = useState();
     const [data, setData] = useState();
     const [search, setSearch] = useState('');
 
@@ -53,6 +55,7 @@ const Weather = () => {
                 const response = await fetch(url, options);
                 const result = await response.json();
                 let city = result.city.name;
+                setUserLocation(result);
                 if (!city) setSearch('New York');
                 setSearch(city)
             } catch (error) {
@@ -65,7 +68,7 @@ const Weather = () => {
     //get city on click
     const getCityData = (e) => {
         let value = e.target.textContent;
-        setSearch(value)
+        setSearch(value);
     }
 
     //City selections
@@ -167,6 +170,7 @@ const Weather = () => {
                             justifyContent: 'center', 
                             alignItems: 'center',
                             maxWidth: '358px',
+                            minHeight: '240px',
                             backgroundColor: skyBlue,
                         }}>
                             {/* SHOW DIFFERENT ICON BASED ON DESCRIPTION */}
@@ -178,7 +182,8 @@ const Weather = () => {
                                         : data && data.weather[0].description.includes('storm') ? <img src={storm} width={isMobile ? '80' : '120' } alt='icon'/> 
                                         : data && data.weather[0].description.includes('cloud') ? <img src={clouds} width={isMobile ? '80' : '120' } alt='icon'/>
                                         : data && data.weather[0].description == 'scattered clouds' ? <img src={cloudsSun} width={isMobile ? '80' : '120' } alt='icon'/> 
-                                        : data && data.weather[0].description.includes('mist') ? <img src={fog} width={isMobile ? '80' : '120' } alt='icon'/> 
+                                        : data && data.weather[0].description == 'squalls' ? <img src={wind} width={isMobile ? '80' : '120' } alt='icon'/> 
+                                        : data && data.weather[0].description.includes('mist') ? <img src={fog} width={isMobile ? '75' : '120' } alt='icon'/> 
                                         : data && data.weather[0].description.includes('fog') ? <img src={fog} width={isMobile ? '80' : '120' } alt='icon'/> 
                                         : data && data.weather[0].description.includes('snow') ? <img src={snow} width={isMobile ? '80' : '120' } alt='icon'/> 
                                         : <WbSunnyIcon sx={{ fontSize: isMobile ? '4rem' : '7rem', color: colorThemes.simple.accentColor}}/> 
@@ -217,7 +222,7 @@ const Weather = () => {
                             </CardContent>
                         </Card>
 
-                        <Card sx={{ minWidth: isMobile ? '98%' : '40%', maxWidth: '358px', m: isMobile ? '' : '.25rem 0'}}>
+                        <Card sx={{ minWidth: isMobile ? '98%' : '40%', maxWidth: '358px', m: isMobile ? '' : '.25rem 0',}}>
                             <CardContent>
                                 <Typography variant='h2' sx={{ fontSize: isMobile ? '2rem' : '3rem', fontWeight: '600', color: blackText}}>
                                     {data ? `${data.name}` : 'loading..'}
