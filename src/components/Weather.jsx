@@ -16,7 +16,7 @@ import storm from '../assets/cloud-lightning-rain.svg';
 import fog from '../assets/fog.svg';
 import snow from '../assets/cloud-snow.svg';
 import wind from '../assets/wind.svg';
-import background from '../assets/background.jpeg';
+import background from '../assets/background.png';
 
 const Weather = () => {
     const [userLocation, setUserLocation] = useState();
@@ -96,6 +96,7 @@ const Weather = () => {
             justifyContent: 'center', 
             alignItems: 'center', 
             backgroundImage: `url(${background})`,
+            backgroundRepeat: `no-repeat`
         }}>
             <Box 
             sx={{
