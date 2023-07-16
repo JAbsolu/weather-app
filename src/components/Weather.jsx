@@ -82,6 +82,7 @@ const Weather = () => {
 
     //Media query
     const isMobile = useMediaQuery('(max-width: 500px)');
+    const isWideScreen = useMediaQuery('(min-width: 1490px)');
 
     const h1 = fonts.heading1;
     const h2 = fonts.heading2;
@@ -93,13 +94,15 @@ const Weather = () => {
             margin: '0', 
             padding: '0', 
             display: 'flex', 
-            justifyContent: 'center', 
-            alignItems: 'center', 
             backgroundImage: `url(${background})`,
             backgroundRepeat: `no-repeat`
         }}>
             <Box 
             sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
                 backgroundColor: transparent,
                 color: colorThemes.simple.white,
                 padding: isMobile ? '1rem .2rem' : '1.5rem 1rem',
@@ -121,11 +124,13 @@ const Weather = () => {
                     Daily Weather
                 </Typography>   
                 <Box sx={{ 
-                        display: 'flex', 
+                        display: 'flex',
+                        flexWrap: 'wrap',
                         justifyContent: 'center', 
                         alignItems: 'center', 
-                        m: '1rem 0', 
-                        gap: '1rem'
+                        m: '0', 
+                        gap: '1rem',
+                        width: isMobile ? '90%' : '50%',
                 }}>
                     {citySelect.map((city) => (
                         <Typography 
@@ -142,26 +147,18 @@ const Weather = () => {
                             {city} {/* Each indvidual element in the array */}
                         </Typography>
                     ))}
-                </Box>
-                
-                <Box sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    mb: isMobile ? '0' : '1rem',
-                    maxWidth: '1700px',
-                }}>
-                    <input 
+                     <input 
                         placeholder="Search city" 
                         name="search"
                         onChange={e => setSearch(e.target.value)}
                         style={{
-                            width: !isMobile ? '63%' : '86%',
+                            width: isWideScreen ? '72.5%' : '100%',
                             padding: !isMobile ? '.5rem' : '.4rem',
                             fontSize: '1rem',
                         }}
                     />
                 </Box>
+
                 <Box sx={{maxWidth: '1700px'}}>
                     <FlexBetween>
                         <Card sx={{ 
@@ -170,7 +167,7 @@ const Weather = () => {
                             display: 'flex', 
                             justifyContent: 'center', 
                             alignItems: 'center',
-                            maxWidth: '358px',
+                            maxWidth: '100%',
                             minHeight: '240px',
                             backgroundColor: skyBlue,
                         }}>
@@ -223,7 +220,7 @@ const Weather = () => {
                             </CardContent>
                         </Card>
 
-                        <Card sx={{ minWidth: isMobile ? '98%' : '40%', maxWidth: '358px', m: isMobile ? '' : '.25rem 0',}}>
+                        <Card sx={{ minWidth: isMobile ? '98%' : '40%', maxWidth: '100%', m: isMobile ? '' : '.25rem 0',}}>
                             <CardContent>
                                 <Typography variant='h2' sx={{ fontSize: isMobile ? '2rem' : '3rem', fontWeight: '600', color: blackText}}>
                                     {data ? `${data.name}` : 'loading..'}
