@@ -16,7 +16,7 @@ import storm from '../assets/cloud-lightning-rain.svg';
 import fog from '../assets/fog.svg';
 import snow from '../assets/cloud-snow.svg';
 import wind from '../assets/wind.svg';
-import background from '../assets/background.png';
+import background from '../assets/background.jpg';
 
 const Weather = () => {
     const [userLocation, setUserLocation] = useState();
