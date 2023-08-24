@@ -18,7 +18,8 @@ import snow from '../assets/cloud-snow.svg';
 import wind from '../assets/wind.svg';
 import SearchIcon from '@mui/icons-material/Search';
 import background from '../assets/background.jpg';
-import { apiKey } from "../secrets";
+import { WeatherApiKey } from "../secrets";
+import { ipApiKey } from "../secrets";
 
 
 const Weather = () => {
@@ -40,11 +41,13 @@ const Weather = () => {
         setSearch(value);
     }
 
+
+
     // GET WEATHER DATA AND LIVE LOCATION
     useEffect(() => {
 
         const fetchData = async () => {
-            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(search)}&appid=${apiKey}`)
+            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(search)}&appid=${WeatherApiKey}`)
             .then(response => {
                 if (!response.ok) throw new Error('Error')
                 return response.json();
@@ -59,7 +62,7 @@ const Weather = () => {
         fetchData();
 
         const getLocation = async () => {
-            const url = `https://ip-geo-location.p.rapidapi.com/ip/check?format=json`;
+            const url = ipApiKey;
             const options = {
                 method: 'GET',
                 headers: {
