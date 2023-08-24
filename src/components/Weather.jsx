@@ -83,6 +83,10 @@ const Weather = () => {
             }
           }
           getLocation()
+
+          if (search) {
+            localStorage.setItem('location', search)
+          }
     }, [search])
 
     //get city on click
