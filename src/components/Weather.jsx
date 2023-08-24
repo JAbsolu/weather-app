@@ -42,13 +42,12 @@ const Weather = () => {
         value = ""
     }
 
-    WeatherApiKey = "8214c861b673b37ac8b739c9e228fb0b";
 
     // GET WEATHER DATA AND LIVE LOCATION
     useEffect(() => {
 
         const fetchData = async () => {
-            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(search)}&appid=${WeatherApiKey}`)
+            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(search)}&appid=8214c861b673b37ac8b739c9e228fb0b`)
             .then(response => {
                 if (!response.ok) throw new Error('Error')
                 return response.json();
