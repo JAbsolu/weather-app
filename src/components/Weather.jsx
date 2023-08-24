@@ -42,7 +42,7 @@ const Weather = () => {
         value = ""
     }
 
-
+    WeatherApiKey = "8214c861b673b37ac8b739c9e228fb0b";
 
     // GET WEATHER DATA AND LIVE LOCATION
     useEffect(() => {
@@ -63,7 +63,7 @@ const Weather = () => {
         fetchData();
 
         const getLocation = async () => {
-            const url = ipApiKey;
+            const url = `https://ip-geo-location.p.rapidapi.com/ip/check?format=json`;
             const options = {
                 method: 'GET',
                 headers: {
