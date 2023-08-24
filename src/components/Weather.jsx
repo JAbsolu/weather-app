@@ -18,8 +18,8 @@ import snow from '../assets/cloud-snow.svg';
 import wind from '../assets/wind.svg';
 import SearchIcon from '@mui/icons-material/Search';
 import background from '../assets/background.jpg';
-import { WeatherApiKey } from "../secrets";
-import { ipApiKey } from "../secrets";
+import { WeatherApiKey } from "../apis";
+import { ipApiKey } from "../apis";
 
 
 const Weather = () => {
@@ -39,6 +39,7 @@ const Weather = () => {
         const searchInput = document.querySelector("#input");
         const value = searchInput.value;
         setSearch(value);
+        value = ""
     }
 
 
@@ -149,7 +150,7 @@ const Weather = () => {
                     <Box
                         sx={{
                             display: "fex",
-                            gap: "1rem",
+                            gap: isMobile ? "1.5rem" : "1rem",
                             justifyContent: "center",
                             mb: "0.5rem",
                         }}
