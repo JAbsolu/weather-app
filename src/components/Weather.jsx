@@ -18,8 +18,8 @@ import snow from '../assets/cloud-snow.svg';
 import wind from '../assets/wind.svg';
 import SearchIcon from '@mui/icons-material/Search';
 import background from '../assets/background.jpg';
-import { WeatherApiKey } from "../apis";
-import { ipApiKey } from "../apis";
+// import { WeatherApiKey } from "../apis";
+// import { ipApiKey } from "../apis";
 
 
 const Weather = () => {
