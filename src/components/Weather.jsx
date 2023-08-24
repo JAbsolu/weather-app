@@ -76,16 +76,20 @@ const Weather = () => {
                 const result = await response.json();
                 let city = result.city.name;
                 setUserLocation(result);
-                if (!city) setSearch('New York');
                 setSearch(city)
             } catch (error) {
                 console.error(error);
             }
           }
           getLocation()
-
+          
           if (search) {
             localStorage.setItem('location', search)
+          }
+
+          const locationSet = localStorage.getItem('location');
+          if (locationSet) {
+            setSearch(locationSet)
           }
     }, [search])
 
@@ -109,13 +113,15 @@ const Weather = () => {
     const isWideScreen = useMediaQuery('(min-width: 1490px)');
 
     return (
-        <Box sx={{
-            margin: '0', 
-            padding: '0', 
-            display: 'flex',
-            backgroundImage: `url(${background})`,
-            backgroundRepeat: `no-repeat`
-        }}>
+        <Box 
+            sx={{
+                margin: '0', 
+                padding: '0', 
+                display: 'flex',
+                backgroundImage: `url(${background})`,
+                backgroundRepeat: `no-repeat`
+            }}
+        >
             <Box 
                 sx={{
                     display: 'flex',
