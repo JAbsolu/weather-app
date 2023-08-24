@@ -16,18 +16,35 @@ import storm from '../assets/cloud-lightning-rain.svg';
 import fog from '../assets/fog.svg';
 import snow from '../assets/cloud-snow.svg';
 import wind from '../assets/wind.svg';
+import SearchIcon from '@mui/icons-material/Search';
 import background from '../assets/background.jpg';
+import { apiKey } from "../secrets";
+
 
 const Weather = () => {
     const [userLocation, setUserLocation] = useState();
     const [data, setData] = useState();
-    const [search, setSearch] = useState('');
+    const [search, setSearch] = useState();
+
+    const handleSearch = (e) => {
+        let key = e.key
+        if (key === "Enter") {
+            let value = e.target.value;
+            setSearch(value);
+        }
+    }
+
+    const handleCLickSearch = () => {
+        const searchInput = document.querySelector("#input");
+        const value = searchInput.value;
+        setSearch(value);
+    }
 
     // GET WEATHER DATA AND LIVE LOCATION
     useEffect(() => {
 
         const fetchData = async () => {
-            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(search)}&appid=8214c861b673b37ac8b739c9e228fb0b`)
+            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(search)}&appid=${apiKey}`)
             .then(response => {
                 if (!response.ok) throw new Error('Error')
                 return response.json();
@@ -81,35 +98,30 @@ const Weather = () => {
     const blackText = colorThemes.simple.textColor;
 
     //Media query
-    const isMobile = useMediaQuery('(max-width: 500px)');
+    const isMobile = useMediaQuery('(max-width: 600px)');
     const isWideScreen = useMediaQuery('(min-width: 1490px)');
-
-    const h1 = fonts.heading1;
-    const h2 = fonts.heading2;
-    const h3 = fonts.heading3;
-    const p = fonts.paragraph;
 
     return (
         <Box sx={{
             margin: '0', 
             padding: '0', 
-            display: 'flex', 
+            display: 'flex',
             backgroundImage: `url(${background})`,
             backgroundRepeat: `no-repeat`
         }}>
             <Box 
-            sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: transparent,
-                color: colorThemes.simple.white,
-                padding: isMobile ? '1rem .2rem' : '1.5rem 1rem',
-                width: !isMobile ? '97.8vw' : '98vw',
-                minHeight: isMobile ? '95.8vh' : '53vh',
-                boxShadow: 2,
-            }}
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: transparent,
+                    color: colorThemes.simple.white,
+                    padding: isMobile ? '1rem .2rem' : '1.5rem 1rem',
+                    width: !isMobile ? '97.8vw' : '98vw',
+                    minHeight: isMobile ? '95.8vh' : '53vh',
+                    boxShadow: 2,
+                }}
             >
                  <Typography 
                     variant="h1" 
@@ -124,42 +136,75 @@ const Weather = () => {
                     Daily Weather
                 </Typography>   
                 <Box sx={{ 
-                        display: 'flex',
-                        flexWrap: 'wrap',
+                        display: 'flex-column',
                         justifyContent: 'center', 
                         alignItems: 'center', 
                         m: '0', 
                         gap: '1rem',
                         width: isMobile ? '90%' : '50%',
                 }}>
-                    {citySelect.map((city) => (
-                        <Typography 
-                            sx={{ 
-                                fontSize: isMobile ? '1rem' : '1rem', 
-                                cursor: 'pointer', 
-                                m: '0',
-                                '&:hover':{ 
-                                    color: colorThemes.simple.accentColor 
-                                }
-                            }}
-                            onClick={getCityData}
-                        >
-                            {city} {/* Each indvidual element in the array */}
-                        </Typography>
-                    ))}
-                     <input 
-                        placeholder="Search city" 
-                        name="search"
-                        onChange={e => setSearch(e.target.value)}
-                        style={{
-                            width: isWideScreen ? '72.5%' : '100%',
-                            padding: !isMobile ? '.5rem' : '.4rem',
-                            fontSize: '1rem',
+                    <Box
+                        sx={{
+                            display: "fex",
+                            gap: "1rem",
+                            justifyContent: "center",
+                            mb: "0.5rem",
                         }}
-                    />
+                    >
+                        {citySelect.map((city) => (
+                            <Typography 
+                                sx={{ 
+                                    fontSize: isMobile ? '1rem' : '1rem', 
+                                    cursor: 'pointer', 
+                                    m: '0',
+                                    '&:hover':{ 
+                                        color: colorThemes.simple.accentColor 
+                                    }
+                                }}
+                                onClick={getCityData}
+                            >
+                                {city} {/* Each indvidual element in the array */}
+                            </Typography>
+                        ))}
+                    </Box>
+                    <Box 
+                        sx={{ 
+                            display: "flex", 
+                            justifyContent: "center", 
+                            alignItems: "center",
+                            gap: "0.2rem"
+                        }}
+                    >
+                        <input 
+                            placeholder="Search city" 
+                            name="search"
+                            id="input"
+                            // onChange={e => setSearch(e.target.value)}
+                            onKeyDown={handleSearch}
+                            style={{
+                                width: isWideScreen ? '41.8rem' : '100%',
+                                padding: !isMobile ? '.5rem' : '.4rem',
+                                fontSize: '1rem',
+                            }}
+                        />
+                        <SearchIcon 
+                            onClick={handleCLickSearch}
+                            sx={{ 
+                                fontSize: 25,
+                                fontWeight: "bold",
+                                color: colorThemes.simple.textColor,
+                                background: "#fff",
+                                p: "0.3rem",
+                                "&:Hover": {
+                                    cursor: "pointer",
+                                    color: colorThemes.simple.orange
+                                }
+                            }} 
+                        />
+                    </Box>
                 </Box>
 
-                <Box sx={{maxWidth: '1700px'}}>
+                <Box sx={{maxWidth: '2000px'}}>
                     <FlexBetween>
                         <Card sx={{ 
                             minWidth: isMobile ? '98%' : '25%',
@@ -211,9 +256,30 @@ const Weather = () => {
                                             color: white,
                                         }}
                                     >
-                                        <Typography sx={{fontSize: isMobile ? '.78rem' : '.8rem', fontWeight: '500'}}>Humdity: {data.main.humidity}%</Typography>
-                                        <Typography sx={{fontSize: isMobile ? '.78rem' : '.8rem', fontWeight: '500'}}>Wind speed: {data.wind.speed} mph</Typography>
-                                        <Typography sx={{fontSize: isMobile ? '.78rem' : '.8rem', fontWeight: '500'}}>Wind dir: {data.wind.deg} &deg;</Typography>
+                                        <Typography 
+                                            sx={{
+                                                fontSize: isMobile ? '.78rem' : '.8rem', 
+                                                fontWeight: '500'
+                                            }}
+                                        >
+                                            Humdity: {data.main.humidity}%
+                                        </Typography>
+                                        <Typography 
+                                            sx={{
+                                                fontSize: isMobile ? '.78rem' : '.8rem', 
+                                                fontWeight: '500'
+                                            }}
+                                        >
+                                            Wind speed: {data.wind.speed} mph
+                                        </Typography>
+                                        <Typography 
+                                            sx={{
+                                                fontSize: isMobile ? '.78rem' : '.8rem', 
+                                                fontWeight: '500'
+                                            }}
+                                        >
+                                            Wind dir: {data.wind.deg} &deg;
+                                        </Typography>
                                     </Box>
                                     : null
                                 } 
