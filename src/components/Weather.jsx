@@ -37,7 +37,7 @@ const Weather = () => {
 
     const handleCLickSearch = () => {
         const searchInput = document.querySelector("#input");
-        const value = searchInput.value;
+        let value = searchInput.value;
         setSearch(value);
         value = ""
     }
@@ -83,14 +83,6 @@ const Weather = () => {
           }
           getLocation()
           
-          if (search) {
-            localStorage.setItem('location', search)
-          }
-
-          const locationSet = localStorage.getItem('location');
-          if (locationSet) {
-            setSearch(locationSet)
-          }
     }, [search])
 
     //get city on click
