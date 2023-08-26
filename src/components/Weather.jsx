@@ -94,8 +94,12 @@ const Weather = () => {
           
     }, [search])
 
+    let currentCity = null;
+    if (userLocation) {
+        currentCity = userLocation.city.name;
+    }
     //City selections
-    const citySelect = ["New York", "Boston", "Chicago", "Los Angeles"];
+    const citySelect = [currentCity, "New York", "Boston", "Chicago", "Los Angeles"];
 
     //styles from theme
     const transparent = colorThemes.simple.transparent;
@@ -164,7 +168,7 @@ const Weather = () => {
                                 sx={{ 
                                     fontSize: isMobile ? '1rem' : '1rem', 
                                     cursor: 'pointer', 
-                                    m: '0 0.25rem',
+                                    m: '0 0.3rem',
                                     '&:hover':{ 
                                         color: colorThemes.simple.accentColor 
                                     }
