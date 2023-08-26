@@ -26,11 +26,13 @@ const Weather = () => {
     const [search, setSearch] = useState();
 
     const handleSearch = (e) => {
+        const searchInput = document.querySelector("#input");
         let key = e.key
         if (key === "Enter") {
             let value = e.target.value;
             setSearch(value);
         }
+        searchInput.value = "";
     }
 
     //When the search icon is clicked
