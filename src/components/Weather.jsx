@@ -30,9 +30,10 @@ const Weather = () => {
         let key = e.key
         if (key === "Enter") {
             let value = e.target.value;
-            setSearch(value);
+            localStorage.setItem("city", value);
+            setSearch(localStorage.getItem("city"));
+            searchInput.value = "";
         }
-        searchInput.value = "";
     }
 
     //When the search icon is clicked
