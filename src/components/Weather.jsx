@@ -99,7 +99,7 @@ const Weather = () => {
         currentCity = userLocation.city.name;
     }
     //City selections
-    const citySelect = [currentCity, "New York", "Boston", "Chicago", "Los Angeles"];
+    const citySelect = [currentCity, "New York", "Chicago", "Los Angeles"];
 
     //styles from theme
     const transparent = colorThemes.simple.transparent;
