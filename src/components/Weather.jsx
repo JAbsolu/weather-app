@@ -163,9 +163,8 @@ const Weather = () => {
                             <Typography 
                                 sx={{ 
                                     fontSize: isMobile ? '1rem' : '1rem', 
-                                    gap: isMobile ? "0.5rem" : "",
                                     cursor: 'pointer', 
-                                    m: '0',
+                                    m: '0 0.25rem',
                                     '&:hover':{ 
                                         color: colorThemes.simple.accentColor 
                                     }
