@@ -33,11 +33,13 @@ const Weather = () => {
         }
     }
 
+    //When the search icon is clicked
     const handleCLickSearch = () => {
         const searchInput = document.querySelector("#input");
         let value = searchInput.value;
         localStorage.setItem("city", value);
         setSearch(localStorage.getItem("city"));
+        searchInput.value = "";
     }
 
         //get city on click
@@ -94,6 +96,8 @@ const Weather = () => {
           
     }, [search])
 
+
+    //Let the current city to add as first item in the array
     let currentCity = null;
     if (userLocation) {
         currentCity = userLocation.city.name;
