@@ -43,7 +43,6 @@ const Weather = () => {
         //get city on click
         const getCityData = (e) => {
             let value = e.target.textContent;
-            
             localStorage.setItem("city", value);
             setSearch(localStorage.getItem("city"));
         }
@@ -96,7 +95,7 @@ const Weather = () => {
     }, [search])
 
     //City selections
-    const citySelect = ["Current location" ,'New York', "Boston", "Chicago", "Los Angeles"];
+    const citySelect = ["New York", "Boston", "Chicago", "Los Angeles"];
 
     //styles from theme
     const transparent = colorThemes.simple.transparent;
@@ -142,7 +141,7 @@ const Weather = () => {
                         marginTop: isMobile ? '2rem' : '', 
                         color: colorThemes.simple.accentColor}}
                  >
-                    Daily Weather
+                    Daily Weather Forcast
                 </Typography>   
                 <Box sx={{ 
                         display: 'flex-column',
@@ -164,6 +163,7 @@ const Weather = () => {
                             <Typography 
                                 sx={{ 
                                     fontSize: isMobile ? '1rem' : '1rem', 
+                                    gap: isMobile ? "0.5rem" : "",
                                     cursor: 'pointer', 
                                     m: '0',
                                     '&:hover':{ 
