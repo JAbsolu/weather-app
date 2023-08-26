@@ -18,8 +18,6 @@ import snow from '../assets/cloud-snow.svg';
 import wind from '../assets/wind.svg';
 import SearchIcon from '@mui/icons-material/Search';
 import background from '../assets/background.jpg';
-// import { WeatherApiKey } from "../apis";
-// import { ipApiKey } from "../apis";
 
 
 const Weather = () => {
@@ -38,10 +36,17 @@ const Weather = () => {
     const handleCLickSearch = () => {
         const searchInput = document.querySelector("#input");
         let value = searchInput.value;
-        setSearch(value);
-        value = ""
+        localStorage.setItem("city", value);
+        setSearch(localStorage.getItem("city"));
     }
 
+        //get city on click
+        const getCityData = (e) => {
+            let value = e.target.textContent;
+            
+            localStorage.setItem("city", value);
+            setSearch(localStorage.getItem("city"));
+        }
 
     // GET WEATHER DATA AND LIVE LOCATION
     useEffect(() => {
@@ -76,7 +81,12 @@ const Weather = () => {
                 const result = await response.json();
                 let city = result.city.name;
                 setUserLocation(result);
-                setSearch(city)
+                if (!localStorage.getItem("city")) {
+                    setSearch(city)
+                    localStorage.setItem("city", city)
+                } else {
+                    setSearch(localStorage.getItem("city"))
+                }
             } catch (error) {
                 console.error(error);
             }
@@ -85,14 +95,8 @@ const Weather = () => {
           
     }, [search])
 
-    //get city on click
-    const getCityData = (e) => {
-        let value = e.target.textContent;
-        setSearch(value);
-    }
-
     //City selections
-    const citySelect = ['New York', "Boston", "Chicago", "Los Angeles"];
+    const citySelect = ["Current location" ,'New York', "Boston", "Chicago", "Los Angeles"];
 
     //styles from theme
     const transparent = colorThemes.simple.transparent;
