@@ -68,7 +68,7 @@ const Weather = () => {
             });
         };
         fetchData();
-        
+
         //GET USER LOCATION API CALL
         const getLocation = async () => {
             const url = `https://ip-geo-location.p.rapidapi.com/ip/check?format=json`;
@@ -415,9 +415,7 @@ const Weather = () => {
                                             'loading..'
                                         )
                                     }
-                                    
                                 </Box>
-
                             </CardContent>
                             </Card>
                     </FlexBetween>
