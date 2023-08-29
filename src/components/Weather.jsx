@@ -7,7 +7,7 @@ import {
     useMediaQuery,
 } from "@mui/material";
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
-import { colorThemes, fonts } from "../theme";
+import { colorThemes } from "../theme";
 import FlexBetween from "./flexBetween";
 import clouds from '../assets/clouds.svg';
 import cloudsSun from '../assets/cloud-sun.svg';
@@ -25,8 +25,8 @@ const Weather = () => {
     const [data, setData] = useState();
     const [search, setSearch] = useState();
 
+    const searchInput = document.querySelector("#input"); //GET THE SEARCH INPUT FIELD
     const handleSearch = (e) => {
-        const searchInput = document.querySelector("#input");
         let key = e.key
         if (key === "Enter") {
             let value = e.target.value;
@@ -38,23 +38,22 @@ const Weather = () => {
 
     //When the search icon is clicked
     const handleCLickSearch = () => {
-        const searchInput = document.querySelector("#input");
         let value = searchInput.value;
         localStorage.setItem("city", value);
         setSearch(localStorage.getItem("city"));
         searchInput.value = "";
     }
 
-        //get city on click
-        const getCityData = (e) => {
-            let value = e.target.textContent;
-            localStorage.setItem("city", value);
-            setSearch(localStorage.getItem("city"));
-        }
+    //get city on click
+    const getCityData = (e) => {
+        let value = e.target.textContent;
+        localStorage.setItem("city", value);
+        setSearch(localStorage.getItem("city"));
+    }
 
     // GET WEATHER DATA AND LIVE LOCATION
     useEffect(() => {
-
+        //GET WEATHER DATA API CALL
         const fetchData = async () => {
             fetch(`https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(search)}&appid=8214c861b673b37ac8b739c9e228fb0b`)
             .then(response => {
@@ -69,7 +68,8 @@ const Weather = () => {
             });
         };
         fetchData();
-
+        
+        //GET USER LOCATION API CALL
         const getLocation = async () => {
             const url = `https://ip-geo-location.p.rapidapi.com/ip/check?format=json`;
             const options = {
@@ -113,6 +113,7 @@ const Weather = () => {
     const skyBlue = colorThemes.simple.skyBlue;
     const white = colorThemes.simple.white;
     const blackText = colorThemes.simple.textColor;
+    const accent = colorThemes.simple.accentColor;
 
     //Media query
     const isMobile = useMediaQuery('(max-width: 600px)');
@@ -135,7 +136,7 @@ const Weather = () => {
                     justifyContent: 'center',
                     alignItems: 'center',
                     backgroundColor: transparent,
-                    color: colorThemes.simple.white,
+                    color: white,
                     padding: isMobile ? '1rem .2rem' : '1.5rem 1rem',
                     width: !isMobile ? '97.8vw' : '98vw',
                     minHeight: isMobile ? '95.8vh' : '53vh',
@@ -146,11 +147,11 @@ const Weather = () => {
                     variant="h1" 
                     sx={{
                         fontSize: '2rem', 
-                        color: 'white', 
                         textAlign: 'center', 
                         marginBottom: isMobile ? '2rem' : '1rem', 
                         marginTop: isMobile ? '2rem' : '', 
-                        color: colorThemes.simple.accentColor}}
+                        color: accent,
+                    }}
                  >
                     Daily Weather Forcast
                 </Typography>   
@@ -212,7 +213,7 @@ const Weather = () => {
                                 fontSize: 25,
                                 fontWeight: "bold",
                                 color: colorThemes.simple.textColor,
-                                background: "#fff",
+                                background: white,
                                 p: "0.3rem",
                                 "&:Hover": {
                                     cursor: "pointer",
@@ -237,18 +238,27 @@ const Weather = () => {
                         }}>
                             {/* SHOW DIFFERENT ICON BASED ON DESCRIPTION */}
                             <CardContent>
+                                {/* CHAIN OF TERNARY IF ELSE STATEMENTS */}
                                 {
                                     data && data.weather[0].main == 'Clear' ? 
-                                        <WbSunnyIcon sx={{ fontSize: isMobile ? '5rem' : '7rem', color: colorThemes.simple.accentColor,}}/>
-                                        : data && data.weather[0].description.includes('rain') ? <img src={cloudRain} width={isMobile ? '80' : '120' } alt='icon'/> 
-                                        : data && data.weather[0].description.includes('storm') ? <img src={storm} width={isMobile ? '80' : '120' } alt='icon'/> 
-                                        : data && data.weather[0].description.includes('cloud') ? <img src={clouds} width={isMobile ? '80' : '120' } alt='icon'/>
-                                        : data && data.weather[0].description == 'scattered clouds' ? <img src={cloudsSun} width={isMobile ? '80' : '120' } alt='icon'/> 
-                                        : data && data.weather[0].description == 'squalls' ? <img src={wind} width={isMobile ? '80' : '120' } alt='icon'/> 
-                                        : data && data.weather[0].description.includes('mist') ? <img src={fog} width={isMobile ? '75' : '120' } alt='icon'/> 
-                                        : data && data.weather[0].description.includes('fog') ? <img src={fog} width={isMobile ? '80' : '120' } alt='icon'/> 
-                                        : data && data.weather[0].description.includes('snow') ? <img src={snow} width={isMobile ? '80' : '120' } alt='icon'/> 
-                                        : <WbSunnyIcon sx={{ fontSize: isMobile ? '4rem' : '7rem', color: colorThemes.simple.accentColor}}/> 
+                                    <WbSunnyIcon sx={{ fontSize: isMobile ? '5rem' : '7rem', color: accent,}}/>
+                                    : data && data.weather[0].description.includes('rain') ?                // NEW TERNARY IF STATEMENT
+                                        <img src={cloudRain} width={isMobile ? '80' : '120' } alt='icon'/> 
+                                    : data && data.weather[0].description.includes('storm') ?                // NEW TERNARY IF STATEMENT
+                                        <img src={storm} width={isMobile ? '80' : '120' } alt='icon'/> 
+                                    : data && data.weather[0].description.includes('cloud') ?                // NEW TERNARY IF STATEMENT
+                                        <img src={clouds} width={isMobile ? '80' : '120' } alt='icon'/>
+                                    : data && data.weather[0].description == 'scattered clouds' ?                // NEW TERNARY IF STATEMENT
+                                        <img src={cloudsSun} width={isMobile ? '80' : '120' } alt='icon'/> 
+                                    : data && data.weather[0].description == 'squalls' ?                // NEW TERNARY IF STATEMENT
+                                        <img src={wind} width={isMobile ? '80' : '120' } alt='icon'/> 
+                                    : data && data.weather[0].description.includes('mist') ?                // NEW TERNARY IF STATEMENT
+                                        <img src={fog} width={isMobile ? '75' : '120' } alt='icon'/> 
+                                    : data && data.weather[0].description.includes('fog') ?                // NEW TERNARY IF STATEMENT
+                                        <img src={fog} width={isMobile ? '80' : '120' } alt='icon'/> 
+                                    : data && data.weather[0].description.includes('snow') ?                // NEW TERNARY IF STATEMENT
+                                        <img src={snow} width={isMobile ? '80' : '120' } alt='icon'/> 
+                                    : <WbSunnyIcon sx={{ fontSize: isMobile ? '4rem' : '7rem', color: colorThemes.simple.accentColor}}/> 
                                 }
 
                                 {/* WEATHER DESCRIPTION */}
@@ -305,53 +315,105 @@ const Weather = () => {
                             </CardContent>
                         </Card>
 
-                        <Card sx={{ minWidth: isMobile ? '98%' : '40%', maxWidth: '100%', m: isMobile ? '' : '.25rem 0',}}>
+                        <Card 
+                            sx={{ 
+                                minWidth: isMobile ? '98%' : '40%', 
+                                maxWidth: '100%', m: isMobile ? '' : '.25rem 0',
+                            }}
+                        >
                             <CardContent>
-                                <Typography variant='h2' sx={{ fontSize: isMobile ? '2rem' : '3rem', fontWeight: '600', color: blackText}}>
-                                    {data ? `${data.name}` : 'loading..'}
+                                <Typography 
+                                    variant='h2' 
+                                    sx={{ fontSize: isMobile ? '2rem' : '3rem', 
+                                        fontWeight: '600', 
+                                        color: blackText
+                                    }}
+                                >
+                                    { data ? `${data.name}` : 'loading..' }
                                 </Typography>
 
-                                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem'}}>
-                                     <Typography sx={{ fontSize: '1rem', }} color="text.secondary" gutterBottom>
+                                <Box 
+                                    sx={{ 
+                                        display: 'flex', 
+                                        justifyContent: 'center', 
+                                        alignItems: 'center', 
+                                        gap: '1rem'
+                                    }}
+                                >
+                                    <Typography 
+                                        sx={{ fontSize: '1rem', }} 
+                                        color="text.secondary" 
+                                        gutterBottom
+                                    >
                                         {/* CHECK TO SEE IF THERE IS DATA, IF YES, CREATE A P TAG, WITH A NESTED SPAN TAG , ADD DATE IN TAG*/}
                                         {
-                                            data ? 
-                                            <Typography>low: <span style={{color: colorThemes.simple.primaryColor, fontWeight: 'bold'}}>
-                                                {parseInt((data.main.temp_min - 273.15) * 1.8 + 32)}&deg;F</span>
-                                            </Typography> 
-                                                : 'loading..'
+                                            data ? (
+                                                <Typography>low: 
+                                                    <span style={{color: colorThemes.simple.primaryColor, fontWeight: 'bold'}}>
+                                                        { parseInt((data.main.temp_min - 273.15) * 1.8 + 32) }&deg;F {/* GET THE MIN TEMP */}
+                                                    </span>
+                                                </Typography> 
+                                            )  : (
+                                                'loading..'
+                                            )
                                         }
                                     </Typography>
                                 
                                     <Box>
                                         {
-                                            data ? 
-                                            <Typography sx={{fontSize: isMobile ? '3.8rem' : '4.5rem', fontWeight: 'bold', mx:'1.5rem',}}>
-                                                {parseInt((data.main.temp - 273.15) * 1.8 + 32)} 
-                                                <span>&deg;</span> 
-                                            </Typography>: ''
+                                            data ? (
+                                                <Typography 
+                                                    sx={{
+                                                        fontSize: isMobile ? '3.8rem' : '4.5rem', 
+                                                        fontWeight: 'bold', mx:'1.5rem',
+                                                    }}
+                                                >
+                                                    { parseInt((data.main.temp - 273.15) * 1.8 + 32) } {/* GET THE ACTUAL TEMP */}
+                                                    <span>&deg;</span> 
+                                                </Typography> 
+                                            ) : (
+                                                'loading..'
+                                            )
                                         } 
                                     </Box>
 
-                                    <Typography sx={{ fontSize: '1rem', }} color="text.secondary" gutterBottom>
+                                    <Typography 
+                                        sx={{ fontSize: '1rem', }} 
+                                        color="text.secondary" 
+                                        gutterBottom
+                                    >
                                         {/* CHECK TO SEE IF THERE IS DATA, IF YES, CREATE A P TAG, WITH A NESTED SPAN TAG , ADD DATE IN TAG*/}
                                         {
-                                            data ? 
-                                            <Typography>high: <span style={{color: colorThemes.simple.orange, fontWeight: 'bold'}}>
-                                                {parseInt((data.main.temp_max - 273.15) * 1.8 + 32)}&deg;F</span>
-                                            </Typography> 
-                                                : 'loading..'
+                                            data ? (
+                                                <Typography>high: 
+                                                    <span style={{color: colorThemes.simple.orange, fontWeight: 'bold'}}>
+                                                        { parseInt((data.main.temp_max - 273.15) * 1.8 + 32) }&deg;F
+                                                    </span> {/* GET THE HIGHEST TEMP*/}
+                                                </Typography> 
+                                             ) : (
+                                                'loading..'
+                                             )
                                         }
                                     </Typography>
                                 </Box>
-                                <Box sx={{ fontSize: '1rem',}} color="text.secondary" gutterBottom>
+                                <Box 
+                                    sx={{ fontSize: '1rem',}} 
+                                    color="text.secondary" 
+                                    gutterBottom
+                                >
                                     {/* THIS BLOCK OF CODE BELOW DISPLAYS FEELS LIKE TEMPERATURE */}
                                     {
-                                        data ? 
-                                        <Typography sx={{fontSize: isMobile ? '.8rem' : '.85rem', mt: '.5rem',}}>currently feels like <span style={{color: blackText, fontWeight: 'bold'}}>
-                                            {parseInt((data.main.feels_like - 273.15) * 1.8 + 32)}&deg;F</span> in {data.name}, {data.sys.country}
-                                        </Typography> 
-                                            : 'loading..'
+                                        data ? (
+                                            <Typography sx={{fontSize: isMobile ? '.8rem' : '.85rem', mt: '.5rem',}}>
+                                                currently feels like 
+                                                <span style={{color: blackText, fontWeight: 'bold'}}>
+                                                    { parseInt((data.main.feels_like - 273.15) * 1.8 + 32) }&deg;F {/* HOW IT CURRENTLY FEELS LIKE TEMP */}
+                                                </span> 
+                                                in {data.name}, {data.sys.country}
+                                            </Typography> 
+                                        )   : (
+                                            'loading..'
+                                        )
                                     }
                                     
                                 </Box>
