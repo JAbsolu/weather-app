@@ -348,7 +348,8 @@ const Weather = () => {
                                         {/* CHECK TO SEE IF THERE IS DATA, IF YES, CREATE A P TAG, WITH A NESTED SPAN TAG , ADD DATE IN TAG*/}
                                         {
                                             data ? (
-                                                <Typography>low: 
+                                                <Typography>
+                                                    <span>low: </span>
                                                     <span style={{color: colorThemes.simple.primaryColor, fontWeight: 'bold'}}>
                                                         { parseInt((data.main.temp_min - 273.15) * 1.8 + 32) }&deg;F {/* GET THE MIN TEMP */}
                                                     </span>
@@ -358,7 +359,9 @@ const Weather = () => {
                                             )
                                         }
                                     </Typography>
-                                
+                                    {/* 
+                                        Main temperature
+                                    */}
                                     <Box>
                                         {
                                             data ? (
@@ -368,8 +371,7 @@ const Weather = () => {
                                                         fontWeight: 'bold', mx:'1.5rem',
                                                     }}
                                                 >
-                                                    { parseInt((data.main.temp - 273.15) * 1.8 + 32) } {/* GET THE ACTUAL TEMP */}
-                                                    <span>&deg;</span> 
+                                                    { parseInt((data.main.temp - 273.15) * 1.8 + 32) }&deg; {/* GET THE ACTUAL TEMP */}
                                                 </Typography> 
                                             ) : (
                                                 'loading..'
@@ -385,7 +387,8 @@ const Weather = () => {
                                         {/* CHECK TO SEE IF THERE IS DATA, IF YES, CREATE A P TAG, WITH A NESTED SPAN TAG , ADD DATE IN TAG*/}
                                         {
                                             data ? (
-                                                <Typography>high: 
+                                                <Typography>
+                                                    <span>high: </span>
                                                     <span style={{color: colorThemes.simple.orange, fontWeight: 'bold'}}>
                                                         { parseInt((data.main.temp_max - 273.15) * 1.8 + 32) }&deg;F
                                                     </span> {/* GET THE HIGHEST TEMP*/}
@@ -405,7 +408,7 @@ const Weather = () => {
                                     {
                                         data ? (
                                             <Typography sx={{fontSize: isMobile ? '.8rem' : '.85rem', mt: '.5rem',}}>
-                                                currently feels like 
+                                                <span>currently feels like </span>
                                                 <span style={{color: blackText, fontWeight: 'bold'}}>
                                                     { parseInt((data.main.feels_like - 273.15) * 1.8 + 32) }&deg;F {/* HOW IT CURRENTLY FEELS LIKE TEMP */}
                                                 </span> 
